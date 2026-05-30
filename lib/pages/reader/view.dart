@@ -38,7 +38,7 @@ class ReaderPage extends StatelessWidget {
     fontFamily: controller.readerSettingsState.value.textFamily,
     height: controller.readerSettingsState.value.lineSpacing,
     fontSize: controller.readerSettingsState.value.fontSize,
-    color: controller.currentTextColor.value ?? Theme.of(Get.context!).colorScheme.onSurface,
+    color: controller.currentTextColor.value ?? (Get.context!.isDarkMode ? kKoodoPresets[1][1] : kKoodoPresets[0][1]),
   );
 
   bool _useOverlayBottomStatusBar() {
@@ -265,9 +265,9 @@ class ReaderPage extends StatelessWidget {
       paraSpacing: controller.readerSettingsState.value.readerParaSpacing,
       paraIndent: controller.readerSettingsState.value.readerParaIndent,
       paperCurlController: controller.paperCurlController,
-      backgroundColor: controller.currentBgColor.value ?? Theme.of(context).colorScheme.surface,
+      backgroundColor: controller.currentBgColor.value ?? (context.isDarkMode ? kKoodoPresets[1][0] : kKoodoPresets[0][0]),
       backsideColor: Color.lerp(
-        controller.currentBgColor.value ?? Theme.of(context).colorScheme.surface,
+        controller.currentBgColor.value ?? (context.isDarkMode ? kKoodoPresets[1][0] : kKoodoPresets[0][0]),
         Theme.of(context).colorScheme.surfaceTint,
         Theme.of(context).brightness == Brightness.dark ? 0.18 : 0.10,
       ),

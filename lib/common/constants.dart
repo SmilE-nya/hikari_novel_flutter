@@ -20,3 +20,11 @@ final TextStyle kCommentAndReplyUsernameTextStyle = TextStyle(fontSize: 15, font
 const int kScrollReadMode = 1;
 
 const int kPageReadMode = 2;
+
+// Koodo Reader preset themes: [bgColor, textColor]
+const List<List<Color>> kKoodoPresets = [
+  [Color(0xFFFFFFFF), Color(0xFF000000)],  // White
+  [Color(0xFF2C2F31), Color(0xFFFFFFFF)],  // Dark
+  [Color(0xFFE9D8BC), Color(0xFF594429)],  // Sepia
+  [Color(0xFFC5E7CF), Color(0xFF36503E)],  // Green
+];

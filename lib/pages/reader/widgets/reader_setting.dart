@@ -8,6 +8,7 @@ import 'package:hikari_novel_flutter/service/tts_service.dart';
 import 'package:hikari_novel_flutter/widgets/custom_tile.dart';
 import 'package:hikari_novel_flutter/widgets/state_page.dart';
 
+import '../../../common/constants.dart';
 import '../../../models/dual_page_mode.dart';
 import '../../../models/reader_direction.dart';
 import '../controller.dart';
@@ -208,6 +209,41 @@ class ReaderSettingPage extends StatelessWidget {
   Widget _buildTheme(BuildContext context) {
     return ListView(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Text("reader_theme_presets".tr, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: List.generate(4, (i) {
+              final bg = kKoodoPresets[i][0];
+              final text = kKoodoPresets[i][1];
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () => controller.applyReaderPresetTheme(i),
+                  child: Container(
+                    margin: EdgeInsets.only(right: i < 3 ? 8 : 0),
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: bg,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: Center(
+                      child: Text(
+                        ["reader_theme_white", "reader_theme_dark", "reader_theme_sepia", "reader_theme_green"][i].tr,
+                        style: TextStyle(color: text, fontSize: 13, fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ),
+        const Divider(height: 24),
         Obx(
           () => NormalTile(
             title: "font".tr,
