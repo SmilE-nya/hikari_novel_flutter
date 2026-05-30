@@ -14,7 +14,7 @@ import '../../service/local_storage_service.dart';
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});
 
-  final controller = Get.put(SettingController());
+  final controller = Get.find<SettingController>();
 
   @override
   Widget build(BuildContext context) {

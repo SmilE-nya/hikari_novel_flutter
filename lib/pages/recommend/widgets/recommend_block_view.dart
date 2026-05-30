@@ -25,7 +25,8 @@ class RecommendBlockView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        ResponsiveGridList(
+        GetX<SettingController>(
+          builder: (sc) => ResponsiveGridList(
             listViewBuilderOptions: ListViewBuilderOptions(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics()
@@ -33,10 +34,11 @@ class RecommendBlockView extends StatelessWidget {
             minItemWidth: 100,
             horizontalGridSpacing: 4,
             verticalGridSpacing: 4,
-            maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
+            maxItemsPerRow: sc.gridColumnCount.value,
             children: block.list.map((item) {
               return NovelCoverCard(novelCover: item);
             }).toList()
+          ),
         ),
       ],
     );

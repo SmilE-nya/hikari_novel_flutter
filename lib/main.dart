@@ -16,6 +16,7 @@ import 'package:hikari_novel_flutter/router/app_pages.dart';
 import 'package:hikari_novel_flutter/router/route_path.dart';
 import 'package:hikari_novel_flutter/service/db_service.dart';
 import 'package:hikari_novel_flutter/service/dev_mode_service.dart';
+import 'package:hikari_novel_flutter/pages/setting/controller.dart';
 import 'package:hikari_novel_flutter/service/local_storage_service.dart';
 import 'package:hikari_novel_flutter/service/tts_service.dart';
 import 'package:jiffy/jiffy.dart';
@@ -31,6 +32,7 @@ void main() async {
   Get.put(DevModeService()).init();
   Get.put(DBService()).init();
   await Get.put(TtsService()).init();
+  Get.put(SettingController());
 
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
     final availableVersion = await WebViewEnvironment.getAvailableVersion();
