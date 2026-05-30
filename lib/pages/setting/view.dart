@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/models/common/language.dart';
 import 'package:hikari_novel_flutter/models/common/wenku8_node.dart';
-import 'package:hikari_novel_flutter/common/constants.dart';
-import 'package:hikari_novel_flutter/pages/reader/controller.dart';
 import 'package:hikari_novel_flutter/pages/setting/controller.dart';
 import 'package:hikari_novel_flutter/widgets/custom_tile.dart';
 import 'package:jiffy/jiffy.dart';
@@ -46,51 +44,28 @@ class SettingPage extends StatelessWidget {
                   }),
             );
           }),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text("theme_mode".tr, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: List.generate(4, (i) {
-                final bg = kKoodoPresets[i][0];
-                final text = kKoodoPresets[i][1];
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      controller.changeReaderThemePreset(i);
-                      if (Get.isRegistered<ReaderController>()) {
-                        Get.find<ReaderController>().applyReaderPresetTheme(i);
-                      }
-                    },
-                    child: Obx(() {
-                      final selected = controller.readerThemePresetIndex.value == i;
-                      return Container(
-                        margin: EdgeInsets.only(right: i < 3 ? 8 : 0),
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: bg,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: selected ? Theme.of(context).colorScheme.primary : Colors.grey.shade300,
-                            width: selected ? 2.5 : 1,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            ["reader_theme_white", "reader_theme_dark", "reader_theme_sepia", "reader_theme_green"][i].tr,
-                            style: TextStyle(color: text, fontSize: 13, fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                );
-              }),
-            ),
-          ),
+          Obx(() {
+            final sub = switch (controller.themeMode.value) {
+              ThemeMode.light => "light_mode".tr,
+              ThemeMode.dark => "dark_mode".tr,
+              _ => "light_mode".tr,
+            };
+            return NormalTile(
+              title: "theme_mode".tr,
+              subtitle: sub,
+              leading: const Icon(Icons.palette_outlined),
+              onTap: () =>
+                  Get.dialog(
+                    RadioListDialog(
+                      value: controller.themeMode.value,
+                      values: [(ThemeMode.light, "light_mode".tr), (ThemeMode.dark, "dark_mode".tr)],
+                      title: "theme_mode".tr,
+                    ),
+                  ).then((value) {
+                    if (value != null) controller.changeThemeMode(value);
+                  }),
+            );
+          }),
           Offstage(
             offstage: !Platform.isAndroid,
             child: Obx(

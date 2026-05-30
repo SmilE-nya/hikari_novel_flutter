@@ -58,9 +58,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //自定义颜色
     Color brandColor = LocalStorageService.instance.getCustomColor();
-    //深浅模式：从 Koodo 预设推导
-    final preset = LocalStorageService.instance.getReaderThemePreset();
-    ThemeMode currentThemeValue = preset == 1 ? ThemeMode.dark : ThemeMode.light;
+    //深浅模式
+    ThemeMode currentThemeValue = LocalStorageService.instance.getThemeMode();
     //是否动态取色
     bool isDynamicColor = LocalStorageService.instance.getIsDynamicColor();
 

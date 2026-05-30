@@ -12,17 +12,12 @@ class SettingController extends GetxController {
   Rx<Language> language = Rx(LocalStorageService.instance.getLanguage());
   RxBool isRelativeTime = LocalStorageService.instance.getIsRelativeTime().obs;
   Rx<Wenku8Node> wenku8Node = Rx(LocalStorageService.instance.getWenku8Node());
-  RxInt readerThemePresetIndex = LocalStorageService.instance.getReaderThemePreset().obs;
+  Rx<ThemeMode> themeMode = Rx(LocalStorageService.instance.getThemeMode());
   RxBool isDynamicColor = LocalStorageService.instance.getIsDynamicColor().obs;
   Rx<Color> customColor = Rx(LocalStorageService.instance.getCustomColor());
   RxInt gridColumnCount = LocalStorageService.instance.getGridColumnCount().obs;
   RxInt browsingHistoryLayout = LocalStorageService.instance.getBrowsingHistoryLayout().obs;
   RxInt userBookshelfLayout = LocalStorageService.instance.getUserBookshelfLayout().obs;
-
-  ThemeMode get derivedThemeMode => switch (readerThemePresetIndex.value) {
-    1 => ThemeMode.dark,
-    _ => ThemeMode.light,
-  };
 
   void changeIsAutoCheckUpdate(bool enabled) {
     isAutoCheckUpdate.value = enabled;
@@ -67,9 +62,9 @@ class SettingController extends GetxController {
     Get.forceAppUpdate();
   }
 
-  void changeReaderThemePreset(int index) {
-    readerThemePresetIndex.value = index;
-    LocalStorageService.instance.setReaderThemePreset(index);
+  void changeThemeMode(ThemeMode mode) {
+    themeMode.value = mode;
+    LocalStorageService.instance.setThemeMode(mode);
     Get.forceAppUpdate();
   }
 

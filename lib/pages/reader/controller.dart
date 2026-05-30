@@ -570,10 +570,13 @@ class ReaderController extends GetxController {
     final preset = kKoodoPresets[index.clamp(0, 3)];
     final bg = preset[0];
     final text = preset[1];
-    changeReaderDayBgColor(bg);
-    changeReaderDayTextColor(text);
-    changeReaderNightBgColor(bg);
-    changeReaderNightTextColor(text);
+    if (Get.context!.isDarkMode) {
+      changeReaderNightBgColor(bg);
+      changeReaderNightTextColor(text);
+    } else {
+      changeReaderDayBgColor(bg);
+      changeReaderDayTextColor(text);
+    }
   }
 
   Future<bool?> pickBgImageFile(bool isDark) async {
