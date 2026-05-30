@@ -9,6 +9,8 @@ import 'package:hikari_novel_flutter/pages/setting/controller.dart';
 import 'package:hikari_novel_flutter/widgets/custom_tile.dart';
 import 'package:jiffy/jiffy.dart';
 
+import 'package:file_picker/file_picker.dart';
+
 import '../../service/local_storage_service.dart';
 
 class SettingPage extends StatelessWidget {
@@ -125,6 +127,15 @@ class SettingPage extends StatelessWidget {
               value: controller.isAutoCheckUpdate.value,
             ),
           ),
+          Obx(() => NormalTile(
+            title: "export".tr,
+            subtitle: controller.exportPath.value,
+            leading: const Icon(Icons.folder_outlined),
+            onTap: () async {
+              final dir = await FilePicker.platform.getDirectoryPath(dialogTitle: "select_export_dir".tr);
+              if (dir != null) controller.changeExportPath(dir);
+            },
+          )),
           Obx(() {
             final sub = "${controller.gridColumnCount.value} ${"columns_count".tr}";
             return NormalTile(

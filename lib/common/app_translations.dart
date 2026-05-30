@@ -299,6 +299,17 @@ class AppTranslations extends Translations {
       "list_mode": "列表模式",
       "grid_mode": "网格模式",
       "columns_count": "列数",
+      "export": "导出",
+      "export_not_set": "未设置（将导出到应用目录）",
+      "select_export_dir": "选择导出目录",
+      "export_novel": "导出小说",
+      "export_format": "导出格式",
+      "export_txt": "导出为 .txt",
+      "export_epub": "导出为 .epub",
+      "exporting": "正在导出...",
+      "export_success": "导出成功",
+      "export_failed": "导出失败",
+      "no_cached_chapters": "没有已缓存的章节可导出",
     },
 
     "zh_TW": {
@@ -597,6 +608,17 @@ class AppTranslations extends Translations {
       "list_mode": "列表模式",
       "grid_mode": "網格模式",
       "columns_count": "列數",
+      "export": "匯出",
+      "export_not_set": "未設定（將匯出到應用目錄）",
+      "select_export_dir": "選擇匯出目錄",
+      "export_novel": "匯出小說",
+      "export_format": "匯出格式",
+      "export_txt": "匯出為 .txt",
+      "export_epub": "匯出為 .epub",
+      "exporting": "正在匯出...",
+      "export_success": "匯出成功",
+      "export_failed": "匯出失敗",
+      "no_cached_chapters": "沒有已快取的章節可匯出",
     }
   };
 }

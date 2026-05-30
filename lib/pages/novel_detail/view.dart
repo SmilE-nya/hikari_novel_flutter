@@ -190,6 +190,7 @@ class _NovelDetailPageState extends State<NovelDetailPage> {
       title: Obx(() => AnimatedOpacity(opacity: _opacity.value, duration: const Duration(milliseconds: 200), child: Text(controller.novelDetail.value!.title))),
       titleSpacing: 0,
       actions: [
+        IconButton(onPressed: controller.showExportDialog, icon: const Icon(Icons.file_download_outlined), tooltip: "export_novel".tr),
         IconButton(onPressed: controller.enterSelectionMode, icon: Icon(Icons.download_outlined), tooltip: "cache".tr),
         PopupMenuButton<_MenuItem>(
           icon: const Icon(Icons.more_vert),

@@ -61,7 +61,8 @@ class LocalStorageService extends GetxService {
       kBrowsingHistoryLayout = "browsingHistoryLayout",
       kUserBookshelfLayout = "userBookshelfLayout",
       kReaderParaSpacing = "readerParaSpacing",
-      kReaderBottomStatusBarHorizontalSpacing = "readerBottomStatusBarHorizontalSpacing";
+      kReaderBottomStatusBarHorizontalSpacing = "readerBottomStatusBarHorizontalSpacing",
+      kExportPath = "exportPath";
 
   Future<void> init() async {
     final Directory dir = await getApplicationSupportDirectory();
@@ -262,4 +263,8 @@ class LocalStorageService extends GetxService {
   int getUserBookshelfLayout() => _setting.get(kUserBookshelfLayout, defaultValue: 0);
 
   void setUserBookshelfLayout(int value) => _setting.put(kUserBookshelfLayout, value);
+
+  String? getExportPath() => _setting.get(kExportPath);
+
+  void setExportPath(String path) => _setting.put(kExportPath, path);
 }

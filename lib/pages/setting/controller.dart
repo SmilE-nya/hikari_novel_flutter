@@ -6,6 +6,8 @@ import 'package:hikari_novel_flutter/models/common/wenku8_node.dart';
 
 import '../../service/local_storage_service.dart';
 
+String _formatExportPath(String? path) => path ?? "export_not_set".tr;
+
 
 class SettingController extends GetxController {
   RxBool isAutoCheckUpdate = LocalStorageService.instance.getIsAutoCheckUpdate().obs;
@@ -16,6 +18,7 @@ class SettingController extends GetxController {
   RxBool isDynamicColor = LocalStorageService.instance.getIsDynamicColor().obs;
   Rx<Color> customColor = Rx(LocalStorageService.instance.getCustomColor());
   RxInt gridColumnCount = LocalStorageService.instance.getGridColumnCount().obs;
+  RxString exportPath = _formatExportPath(LocalStorageService.instance.getExportPath()).obs;
   RxInt browsingHistoryLayout = LocalStorageService.instance.getBrowsingHistoryLayout().obs;
   RxInt userBookshelfLayout = LocalStorageService.instance.getUserBookshelfLayout().obs;
 
@@ -81,5 +84,10 @@ class SettingController extends GetxController {
   void changeUserBookshelfLayout(int value) {
     userBookshelfLayout.value = value;
     LocalStorageService.instance.setUserBookshelfLayout(value);
+  }
+
+  void changeExportPath(String path) {
+    exportPath.value = path;
+    LocalStorageService.instance.setExportPath(path);
   }
 }
