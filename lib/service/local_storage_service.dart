@@ -87,7 +87,7 @@ class LocalStorageService extends GetxService {
 
   void setThemeMode(ThemeMode tm) => _setting.put(kThemeMode, tm.index);
 
-  ThemeMode getThemeMode() => ThemeMode.values[_setting.get(kThemeMode, defaultValue: ThemeMode.system.index)];
+  ThemeMode getThemeMode() => ThemeMode.values[_setting.get(kThemeMode, defaultValue: ThemeMode.light.index)];
 
   void setCustomColor(Color color) => _setting.put(kCustomColor, color.toARGB32());
 
