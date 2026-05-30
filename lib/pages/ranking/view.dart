@@ -8,6 +8,7 @@ import 'package:responsive_grid_list/responsive_grid_list.dart';
 import '../../widgets/keep_alive_wrapper.dart';
 import '../../widgets/novel_cover_card.dart';
 import '../../widgets/state_page.dart';
+import '../setting/controller.dart';
 
 class RankingView extends StatelessWidget {
   RankingView({super.key});
@@ -49,6 +50,7 @@ class RankingView extends StatelessWidget {
                           minItemWidth: 100,
                           horizontalGridSpacing: 4,
                           verticalGridSpacing: 4,
+                          maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
                           children:
                               controller.data.map((item) {
                                 return NovelCoverCard(novelCover: item);

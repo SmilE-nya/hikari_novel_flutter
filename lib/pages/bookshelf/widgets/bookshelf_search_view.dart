@@ -7,6 +7,7 @@ import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 import '../../../models/novel_cover.dart';
 import '../../../widgets/novel_cover_card.dart';
+import '../../setting/controller.dart';
 
 class BookshelfSearchView extends StatelessWidget {
   BookshelfSearchView({super.key});
@@ -63,6 +64,7 @@ class BookshelfSearchView extends StatelessWidget {
                             minItemWidth: 100,
                             horizontalGridSpacing: 4,
                             verticalGridSpacing: 4,
+                            maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
                             children:
                                 controller.data.map((item) {
                                   return NovelCoverCard(novelCover: NovelCover(item.title, item.img, item.aid));

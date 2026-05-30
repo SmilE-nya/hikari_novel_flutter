@@ -2,6 +2,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/models/page_state.dart';
+import 'package:hikari_novel_flutter/pages/setting/controller.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 import '../../service/db_service.dart';
@@ -140,6 +141,7 @@ class SearchPage extends StatelessWidget {
                         minItemWidth: 100,
                         horizontalGridSpacing: 4,
                         verticalGridSpacing: 4,
+                        maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
                         children: controller.data.map((item) {
                           return NovelCoverCard(novelCover: item);
                         }).toList(),

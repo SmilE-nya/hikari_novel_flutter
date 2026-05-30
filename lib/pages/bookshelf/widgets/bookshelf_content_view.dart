@@ -8,6 +8,7 @@ import '../../../router/app_sub_router.dart';
 import '../../../widgets/keep_alive_wrapper.dart';
 import '../../../widgets/novel_cover_card.dart';
 import '../../../widgets/state_page.dart';
+import '../../setting/controller.dart';
 
 class BookshelfContentView extends StatelessWidget {
   final String classId;
@@ -32,6 +33,7 @@ class BookshelfContentView extends StatelessWidget {
                           minItemWidth: 100,
                           horizontalGridSpacing: 4,
                           verticalGridSpacing: 4,
+                          maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
                           children: controller.bookshelf.value!.list.map((item) {
                             return BookshelfCoverCard(
                               bookshelfNovelInfo: item,
