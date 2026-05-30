@@ -293,6 +293,12 @@ class AppTranslations extends Translations {
       "para_indent": "首行缩进",
       "para_spacing": "段距",
       "bottomStatusBarHorizontalSpacing": "底部状态栏文字边距",
+      "grid_columns": "网格列数",
+      "browsing_history_layout": "浏览历史布局",
+      "user_bookshelf_layout": "用户书架布局",
+      "list_mode": "列表模式",
+      "grid_mode": "网格模式",
+      "columns_count": "列数",
     },
 
     "zh_TW": {
@@ -585,6 +591,12 @@ class AppTranslations extends Translations {
       "para_indent": "首行縮進",
       "para_spacing": "段距",
       "bottomStatusBarHorizontalSpacing": "底部狀態欄文字邊距",
+      "grid_columns": "網格列數",
+      "browsing_history_layout": "瀏覽記錄佈局",
+      "user_bookshelf_layout": "用戶書架佈局",
+      "list_mode": "列表模式",
+      "grid_mode": "網格模式",
+      "columns_count": "列數",
     }
   };
 }
