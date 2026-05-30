@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/pages/bookshelf/controller.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 import '../../../models/page_state.dart';
+import '../../../network/request.dart';
 import '../../../router/app_sub_router.dart';
 import '../../../widgets/keep_alive_wrapper.dart';
 import '../../../widgets/novel_cover_card.dart';
@@ -41,7 +43,13 @@ class BookshelfContentView extends StatelessWidget {
                           child: SizedBox(
                             width: 50,
                             height: 70,
-                            child: Image.network(item.img, fit: BoxFit.cover, errorBuilder: (_, _, _) => const Icon(Icons.broken_image)),
+                            child: CachedNetworkImage(
+                              imageUrl: item.img,
+                              httpHeaders: Request.userAgent,
+                              fit: BoxFit.cover,
+                              placeholder: (_, _) => const Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
+                              errorWidget: (_, _, _) => const Icon(Icons.broken_image),
+                            ),
                           ),
                         ),
                         title: Text(item.title, maxLines: 2, overflow: TextOverflow.ellipsis),
