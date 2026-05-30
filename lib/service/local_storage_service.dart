@@ -61,7 +61,8 @@ class LocalStorageService extends GetxService {
       kBrowsingHistoryLayout = "browsingHistoryLayout",
       kUserBookshelfLayout = "userBookshelfLayout",
       kReaderParaSpacing = "readerParaSpacing",
-      kReaderBottomStatusBarHorizontalSpacing = "readerBottomStatusBarHorizontalSpacing";
+      kReaderBottomStatusBarHorizontalSpacing = "readerBottomStatusBarHorizontalSpacing",
+      kReaderThemePreset = "readerThemePreset";
 
   Future<void> init() async {
     final Directory dir = await getApplicationSupportDirectory();
@@ -88,6 +89,10 @@ class LocalStorageService extends GetxService {
   void setThemeMode(ThemeMode tm) => _setting.put(kThemeMode, tm.index);
 
   ThemeMode getThemeMode() => ThemeMode.values[_setting.get(kThemeMode, defaultValue: ThemeMode.light.index)];
+
+  void setReaderThemePreset(int index) => _setting.put(kReaderThemePreset, index);
+
+  int getReaderThemePreset() => _setting.get(kReaderThemePreset, defaultValue: 2);
 
   void setCustomColor(Color color) => _setting.put(kCustomColor, color.toARGB32());
 
