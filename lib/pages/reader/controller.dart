@@ -470,11 +470,6 @@ class ReaderController extends GetxController {
     } else {
       currentTextColor.value = LocalStorageService.instance.getReaderDayTextColor();
     }
-    // Hive 无值时回退到当前 Koodo 预设
-    if (currentTextColor.value == null) {
-      final presetIndex = LocalStorageService.instance.getReaderThemePreset();
-      currentTextColor.value = kKoodoPresets[presetIndex.clamp(0, 3)][1];
-    }
   }
 
   void getBgColor() {
@@ -482,11 +477,6 @@ class ReaderController extends GetxController {
       currentBgColor.value = LocalStorageService.instance.getReaderNightBgColor();
     } else {
       currentBgColor.value = LocalStorageService.instance.getReaderDayBgColor();
-    }
-    // Hive 无值时回退到当前 Koodo 预设
-    if (currentBgColor.value == null) {
-      final presetIndex = LocalStorageService.instance.getReaderThemePreset();
-      currentBgColor.value = kKoodoPresets[presetIndex.clamp(0, 3)][0];
     }
   }
 

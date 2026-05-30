@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hikari_novel_flutter/common/constants.dart';
 import 'package:hikari_novel_flutter/models/common/language.dart';
 import 'package:hikari_novel_flutter/models/common/wenku8_node.dart';
 
@@ -71,12 +70,6 @@ class SettingController extends GetxController {
   void changeReaderThemePreset(int index) {
     readerThemePresetIndex.value = index;
     LocalStorageService.instance.setReaderThemePreset(index);
-    // 把预设的实际颜色写入 Hive，确保 ReaderController 初始化时能读到
-    final preset = kKoodoPresets[index.clamp(0, 3)];
-    LocalStorageService.instance.setReaderDayBgColor(preset[0]);
-    LocalStorageService.instance.setReaderDayTextColor(preset[1]);
-    LocalStorageService.instance.setReaderNightBgColor(preset[0]);
-    LocalStorageService.instance.setReaderNightTextColor(preset[1]);
     Get.forceAppUpdate();
   }
 
