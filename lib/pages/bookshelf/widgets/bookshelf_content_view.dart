@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/pages/bookshelf/controller.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
+import '../../../common/constants.dart';
 import '../../../models/page_state.dart';
 import '../../../network/request.dart';
 import '../../../router/app_sub_router.dart';
@@ -36,24 +37,7 @@ class BookshelfContentView extends StatelessWidget {
                     itemCount: list.length,
                     itemBuilder: (context, index) {
                       final item = list[index];
-                      return ListTile(
-                        leading: Card(
-                          elevation: 0,
-                          clipBehavior: Clip.antiAlias,
-                          child: SizedBox(
-                            width: 50,
-                            height: 70,
-                            child: CachedNetworkImage(
-                              imageUrl: item.img,
-                              httpHeaders: Request.userAgent,
-                              fit: BoxFit.cover,
-                              placeholder: (_, _) => const Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
-                              errorWidget: (_, _, _) => const Icon(Icons.broken_image),
-                            ),
-                          ),
-                        ),
-                        title: Text(item.title, maxLines: 2, overflow: TextOverflow.ellipsis),
-                        selected: item.isSelected.value,
+                      return InkWell(
                         onTap: () {
                           if (controller.isSelectionMode) {
                             controller.toggleCoverSelection(item.aid);
@@ -67,6 +51,51 @@ class BookshelfContentView extends StatelessWidget {
                             controller.toggleCoverSelection(item.aid);
                           }
                         },
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                          child: Row(
+                            children: [
+                              Card(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardBorderRadius)),
+                                elevation: 0,
+                                clipBehavior: Clip.antiAlias,
+                                child: SizedBox(
+                                  height: 100,
+                                  child: AspectRatio(
+                                    aspectRatio: 9 / 13,
+                                    child: CachedNetworkImage(
+                                      imageUrl: item.img,
+                                      httpHeaders: Request.userAgent,
+                                      fit: BoxFit.cover,
+                                      progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                                      errorWidget: (context, url, error) => const Icon(Icons.error_outline),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(item.title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                                      const SizedBox(height: 6),
+                                      Obx(() => Text(
+                                        item.introduce.value.isNotEmpty ? item.introduce.value : '暂无简介',
+                                        style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                      )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       );
                     },
                   );

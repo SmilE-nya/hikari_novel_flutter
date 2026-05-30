@@ -14,8 +14,10 @@ class BookshelfNovelInfo {
   final String title;
   final String img;
 
+  final RxString introduce;
   final RxBool isSelected;
 
-  BookshelfNovelInfo({required this.bid, required this.aid, required this.url, required this.title, required this.img, bool initSelected = false})
-    : isSelected = initSelected.obs;
+  BookshelfNovelInfo({required this.bid, required this.aid, required this.url, required this.title, required this.img, String? introduce, bool initSelected = false})
+    : introduce = (introduce ?? '').obs,
+      isSelected = initSelected.obs;
 }

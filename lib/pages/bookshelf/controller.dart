@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/models/bookshelf.dart';
+import 'package:hikari_novel_flutter/models/novel_detail.dart';
 import 'package:hikari_novel_flutter/models/page_state.dart';
 import 'package:hikari_novel_flutter/models/resource.dart';
 import 'package:hikari_novel_flutter/network/api.dart';
@@ -91,8 +92,43 @@ class BookshelfContentController extends GetxController {
       } else {
         bookshelf.value = Bookshelf(list: list, classId: classId);
         pageState.value = PageState.success;
+        _loadDescriptions();
       }
     });
+  }
+
+  Future<void> _loadDescriptions() async {
+    final list = bookshelf.value?.list;
+    if (list == null) return;
+
+    const batchSize = 5;
+    for (var i = 0; i < list.length; i += batchSize) {
+      final batch = list.skip(i).take(batchSize);
+      await Future.wait(batch.map(_loadDescription));
+    }
+  }
+
+  Future<void> _loadDescription(BookshelfNovelInfo item) async {
+    // Check local cache first
+    final cached = await DBService.instance.getNovelDetail(item.aid);
+    if (cached != null) {
+      try {
+        final detail = NovelDetail.fromString(cached.json);
+        if (detail.introduce.isNotEmpty) {
+          item.introduce.value = detail.introduce;
+          return;
+        }
+      } catch (_) {}
+    }
+
+    // Fetch from API
+    final result = await Api.getNovelDetail(aid: item.aid);
+    if (result is Success) {
+      final detail = Parser.getNovelDetail(result.data);
+      item.introduce.value = detail.introduce;
+      // Cache to DB
+      DBService.instance.upsertNovelDetail(NovelDetailEntityData(aid: item.aid, json: detail.toString()));
+    }
   }
 
   void toggleCoverSelection(String aid) {
