@@ -566,19 +566,6 @@ class ReaderController extends GetxController {
     }
   }
 
-  void applyReaderPresetTheme(int index) {
-    final preset = kKoodoPresets[index.clamp(0, 3)];
-    final bg = preset[0];
-    final text = preset[1];
-    if (Get.context!.isDarkMode) {
-      changeReaderNightBgColor(bg);
-      changeReaderNightTextColor(text);
-    } else {
-      changeReaderDayBgColor(bg);
-      changeReaderDayTextColor(text);
-    }
-  }
-
   Future<bool?> pickBgImageFile(bool isDark) async {
     try {
       final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['jpg', 'png', 'jpeg']);
