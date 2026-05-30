@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hikari_novel_flutter/models/novel_cover.dart';
 import 'package:hikari_novel_flutter/models/page_state.dart';
 import 'package:hikari_novel_flutter/pages/browsing_history/widgets/browsing_history_card.dart';
+import 'package:hikari_novel_flutter/pages/setting/controller.dart';
 import 'package:hikari_novel_flutter/router/app_sub_router.dart';
+import 'package:hikari_novel_flutter/widgets/novel_cover_card.dart';
 import 'package:hikari_novel_flutter/widgets/state_page.dart';
+import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 import '../../service/db_service.dart';
 import 'controller.dart';
@@ -26,16 +30,35 @@ class BrowsingHistoryPage extends StatelessWidget {
           Obx(
             () => Offstage(
               offstage: controller.pageState.value != PageState.success,
-              child: ListView(
-                children:
-                    controller.list.map((item) {
+              child: Obx(() {
+                final settingController = Get.find<SettingController>();
+                if (settingController.browsingHistoryLayout.value == 0) {
+                  return ListView(
+                    children: controller.list.map((item) {
                       return BrowsingHistoryCard(
                         vh: item,
                         onTap: () => AppSubRouter.toNovelDetail(aid: item.aid),
                         onDelete: () => DBService.instance.deleteBrowsingHistory(item.aid),
                       );
                     }).toList(),
-              ),
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ResponsiveGridList(
+                      minItemWidth: 100,
+                      horizontalGridSpacing: 4,
+                      verticalGridSpacing: 4,
+                      maxItemsPerRow: settingController.gridColumnCount.value,
+                      children: controller.list.map((item) {
+                        return NovelCoverCard(
+                          novelCover: NovelCover(item.title, item.img, item.aid),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }
+              }),
             ),
           ),
           Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: LoadingPage())),
