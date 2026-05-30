@@ -15,6 +15,9 @@ class SettingController extends GetxController {
   Rx<ThemeMode> themeMode = Rx(LocalStorageService.instance.getThemeMode());
   RxBool isDynamicColor = LocalStorageService.instance.getIsDynamicColor().obs;
   Rx<Color> customColor = Rx(LocalStorageService.instance.getCustomColor());
+  RxInt gridColumnCount = LocalStorageService.instance.getGridColumnCount().obs;
+  RxInt browsingHistoryLayout = LocalStorageService.instance.getBrowsingHistoryLayout().obs;
+  RxInt userBookshelfLayout = LocalStorageService.instance.getUserBookshelfLayout().obs;
 
   void changeIsAutoCheckUpdate(bool enabled) {
     isAutoCheckUpdate.value = enabled;
@@ -63,5 +66,20 @@ class SettingController extends GetxController {
     themeMode.value = mode;
     LocalStorageService.instance.setThemeMode(mode);
     Get.forceAppUpdate();
+  }
+
+  void changeGridColumnCount(int value) {
+    gridColumnCount.value = value;
+    LocalStorageService.instance.setGridColumnCount(value);
+  }
+
+  void changeBrowsingHistoryLayout(int value) {
+    browsingHistoryLayout.value = value;
+    LocalStorageService.instance.setBrowsingHistoryLayout(value);
+  }
+
+  void changeUserBookshelfLayout(int value) {
+    userBookshelfLayout.value = value;
+    LocalStorageService.instance.setUserBookshelfLayout(value);
   }
 }
