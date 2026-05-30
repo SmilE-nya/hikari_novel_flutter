@@ -46,9 +46,9 @@ class SettingPage extends StatelessWidget {
           }),
           Obx(() {
             final sub = switch (controller.themeMode.value) {
+              ThemeMode.system => "follow_system".tr,
               ThemeMode.light => "light_mode".tr,
               ThemeMode.dark => "dark_mode".tr,
-              _ => "light_mode".tr,
             };
             return NormalTile(
               title: "theme_mode".tr,
@@ -58,7 +58,7 @@ class SettingPage extends StatelessWidget {
                   Get.dialog(
                     RadioListDialog(
                       value: controller.themeMode.value,
-                      values: [(ThemeMode.light, "light_mode".tr), (ThemeMode.dark, "dark_mode".tr)],
+                      values: [(ThemeMode.system, "follow_system".tr), (ThemeMode.light, "light_mode".tr), (ThemeMode.dark, "dark_mode".tr)],
                       title: "theme_mode".tr,
                     ),
                   ).then((value) {
