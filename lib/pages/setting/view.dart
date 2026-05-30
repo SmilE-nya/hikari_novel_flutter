@@ -125,6 +125,60 @@ class SettingPage extends StatelessWidget {
               value: controller.isAutoCheckUpdate.value,
             ),
           ),
+          Obx(() {
+            final sub = "${controller.gridColumnCount.value} ${"columns_count".tr}";
+            return NormalTile(
+              title: "grid_columns".tr,
+              subtitle: sub,
+              leading: const Icon(Icons.grid_view_outlined),
+              onTap: () =>
+                  Get.dialog(
+                    RadioListDialog<int>(
+                      value: controller.gridColumnCount.value,
+                      values: List.generate(6, (i) => (i + 1, "${i + 1} ${"columns_count".tr}")),
+                      title: "grid_columns".tr,
+                    ),
+                  ).then((value) {
+                    if (value != null) controller.changeGridColumnCount(value);
+                  }),
+            );
+          }),
+          Obx(() {
+            final sub = controller.browsingHistoryLayout.value == 0 ? "list_mode".tr : "grid_mode".tr;
+            return NormalTile(
+              title: "browsing_history_layout".tr,
+              subtitle: sub,
+              leading: const Icon(Icons.history),
+              onTap: () =>
+                  Get.dialog(
+                    RadioListDialog<int>(
+                      value: controller.browsingHistoryLayout.value,
+                      values: [(0, "list_mode".tr), (1, "grid_mode".tr)],
+                      title: "browsing_history_layout".tr,
+                    ),
+                  ).then((value) {
+                    if (value != null) controller.changeBrowsingHistoryLayout(value);
+                  }),
+            );
+          }),
+          Obx(() {
+            final sub = controller.userBookshelfLayout.value == 0 ? "list_mode".tr : "grid_mode".tr;
+            return NormalTile(
+              title: "user_bookshelf_layout".tr,
+              subtitle: sub,
+              leading: const Icon(Icons.book_outlined),
+              onTap: () =>
+                  Get.dialog(
+                    RadioListDialog<int>(
+                      value: controller.userBookshelfLayout.value,
+                      values: [(0, "list_mode".tr), (1, "grid_mode".tr)],
+                      title: "user_bookshelf_layout".tr,
+                    ),
+                  ).then((value) {
+                    if (value != null) controller.changeUserBookshelfLayout(value);
+                  }),
+            );
+          }),
         ],
       ),
     );
