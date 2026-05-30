@@ -25,37 +25,73 @@ class BookshelfContentView extends StatelessWidget {
           Obx(
             () => Offstage(
               offstage: controller.pageState.value != PageState.success,
-              child: Obx(
-                () => controller.bookshelf.value?.list.isNotEmpty == true
-                    ? Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: ResponsiveGridList(
-                          minItemWidth: 100,
-                          horizontalGridSpacing: 4,
-                          verticalGridSpacing: 4,
-                          maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
-                          children: controller.bookshelf.value!.list.map((item) {
-                            return BookshelfCoverCard(
-                              bookshelfNovelInfo: item,
-                              onTap: () {
-                                if (controller.isSelectionMode) {
-                                  controller.toggleCoverSelection(item.aid);
-                                } else {
-                                  AppSubRouter.toNovelDetail(aid: item.aid);
-                                }
-                              },
-                              onLongPress: () {
-                                if (!controller.isSelectionMode) {
-                                  controller.enterSelectionMode();
-                                  controller.toggleCoverSelection(item.aid);
-                                }
-                              },
-                            );
-                          }).toList(),
+              child: Obx(() {
+                final settingController = Get.find<SettingController>();
+                final list = controller.bookshelf.value?.list;
+                if (list == null || list.isEmpty) return const EmptyPage();
+                if (settingController.userBookshelfLayout.value == 0) {
+                  return ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      final item = list[index];
+                      return ListTile(
+                        leading: Card(
+                          elevation: 0,
+                          clipBehavior: Clip.antiAlias,
+                          child: SizedBox(
+                            width: 50,
+                            height: 70,
+                            child: Image.network(item.img, fit: BoxFit.cover, errorBuilder: (_, _, _) => const Icon(Icons.broken_image)),
+                          ),
                         ),
-                      )
-                    : EmptyPage(),
-              ),
+                        title: Text(item.title, maxLines: 2, overflow: TextOverflow.ellipsis),
+                        selected: item.isSelected.value,
+                        onTap: () {
+                          if (controller.isSelectionMode) {
+                            controller.toggleCoverSelection(item.aid);
+                          } else {
+                            AppSubRouter.toNovelDetail(aid: item.aid);
+                          }
+                        },
+                        onLongPress: () {
+                          if (!controller.isSelectionMode) {
+                            controller.enterSelectionMode();
+                            controller.toggleCoverSelection(item.aid);
+                          }
+                        },
+                      );
+                    },
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ResponsiveGridList(
+                      minItemWidth: 100,
+                      horizontalGridSpacing: 4,
+                      verticalGridSpacing: 4,
+                      maxItemsPerRow: settingController.gridColumnCount.value,
+                      children: list.map((item) {
+                        return BookshelfCoverCard(
+                          bookshelfNovelInfo: item,
+                          onTap: () {
+                            if (controller.isSelectionMode) {
+                              controller.toggleCoverSelection(item.aid);
+                            } else {
+                              AppSubRouter.toNovelDetail(aid: item.aid);
+                            }
+                          },
+                          onLongPress: () {
+                            if (!controller.isSelectionMode) {
+                              controller.enterSelectionMode();
+                              controller.toggleCoverSelection(item.aid);
+                            }
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }
+              }),
             ),
           ),
           Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: const LoadingPage())),
