@@ -57,6 +57,9 @@ class LocalStorageService extends GetxService {
       kReaderTtsPitch = "readerTtsPitch",
       kReaderTtsVolume = "readerTtsVolume",
       kReaderParaIndent = "readerParaIndent",
+      kGridColumnCount = "gridColumnCount",
+      kBrowsingHistoryLayout = "browsingHistoryLayout",
+      kUserBookshelfLayout = "userBookshelfLayout",
       kReaderParaSpacing = "readerParaSpacing",
       kReaderBottomStatusBarHorizontalSpacing = "readerBottomStatusBarHorizontalSpacing";
 
@@ -247,4 +250,16 @@ class LocalStorageService extends GetxService {
   int getReaderBottomStatusBarHorizontalSpacing() => _reader.get(kReaderBottomStatusBarHorizontalSpacing, defaultValue: 25);
 
   void setReaderBottomStatusBarHorizontalSpacing(int value) => _reader.put(kReaderBottomStatusBarHorizontalSpacing, value);
+
+  int getGridColumnCount() => _setting.get(kGridColumnCount, defaultValue: 3);
+
+  void setGridColumnCount(int value) => _setting.put(kGridColumnCount, value);
+
+  int getBrowsingHistoryLayout() => _setting.get(kBrowsingHistoryLayout, defaultValue: 0);
+
+  void setBrowsingHistoryLayout(int value) => _setting.put(kBrowsingHistoryLayout, value);
+
+  int getUserBookshelfLayout() => _setting.get(kUserBookshelfLayout, defaultValue: 0);
+
+  void setUserBookshelfLayout(int value) => _setting.put(kUserBookshelfLayout, value);
 }
