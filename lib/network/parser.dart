@@ -404,9 +404,9 @@ class Parser {
 
       String imgUrl;
       if (aid.length <= 3) {
-        imgUrl = 'https://img.wenku8.com/image/0/$aid/${aid}s.jpg';
+        imgUrl = 'https://img.wenku8.com/image/0/$aid/$aid.jpg';
       } else {
-        imgUrl = 'https://img.wenku8.com/image/${aid[0]}/$aid/${aid}s.jpg';
+        imgUrl = 'https://img.wenku8.com/image/${aid[0]}/$aid/$aid.jpg';
       }
 
       novels.add(BookshelfNovelInfo(bid: bid, aid: aid, url: bookUrl, title: title, img: imgUrl));
