@@ -28,7 +28,11 @@ class NovelCoverCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: novelCover.imageUrl!,
                 httpHeaders: Request.userAgent,
-                fit: BoxFit.cover,
+                imageBuilder: (context, imageProvider) => Image(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
+                ),
                 progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
                 errorWidget: (context, url, error) => Column(children: [Icon(Icons.error_outline), Text(error.toString())]),
               ),
@@ -92,7 +96,11 @@ class BookshelfCoverCard extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: bookshelfNovelInfo.img,
                     httpHeaders: Request.userAgent,
-                    fit: BoxFit.cover,
+                    imageBuilder: (context, imageProvider) => Image(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.high,
+                    ),
                     progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
                     errorWidget: (context, url, error) => Column(children: [Icon(Icons.error_outline), Text(error.toString())]),
                   ),

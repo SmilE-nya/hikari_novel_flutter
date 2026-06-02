@@ -478,6 +478,25 @@ class Parser {
     return t == '出现错误！' || t == '出現錯誤！';
   }
 
+  ///从章节内容 HTML 中提取第一张插图 URL（用作高清封面）
+  static String? getFirstIllustration(String html) {
+    try {
+      final document = parse(html);
+      final content = document.getElementById('content');
+      if (content == null) return null;
+      final imgs = content.querySelectorAll('img');
+      for (final img in imgs) {
+        final src = img.attributes['src'];
+        if (src != null && src.isNotEmpty) {
+          return ImageUrlHelper.normalize(src);
+        }
+      }
+    } catch (_) {
+      return null;
+    }
+    return null;
+  }
+
   ///判断搜索结果是否只有一个
   static NovelCover? isSearchResultOnlyOne(String html) {
     try {

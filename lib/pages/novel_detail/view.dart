@@ -225,9 +225,15 @@ class _NovelDetailPageState extends State<NovelDetailPage> {
               blurColor: Theme.of(context).colorScheme.surface,
               child: CachedNetworkImage(
                 width: double.infinity,
-                imageUrl: detail.imgUrl,
+                imageUrl: controller.highResCoverUrl.value.isNotEmpty
+                    ? controller.highResCoverUrl.value
+                    : detail.imgUrl,
                 httpHeaders: Request.userAgent,
-                fit: BoxFit.fitWidth,
+                imageBuilder: (context, imageProvider) => Image(
+                  image: imageProvider,
+                  fit: BoxFit.fitWidth,
+                  filterQuality: FilterQuality.high,
+                ),
                 progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
                 errorWidget: (context, url, error) => Column(children: [const Icon(Icons.error_outline), Text(error.toString())]),
               ),
@@ -260,7 +266,12 @@ class _NovelDetailPageState extends State<NovelDetailPage> {
                   elevation: 0,
                   clipBehavior: Clip.hardEdge,
                   child: GestureDetector(
-                    onTap: () => Get.toNamed(RoutePath.photo, arguments: {"gallery_mode": false, "url": detail.imgUrl}),
+                    onTap: () => Get.toNamed(RoutePath.photo, arguments: {
+                      "gallery_mode": false,
+                      "url": controller.highResCoverUrl.value.isNotEmpty
+                          ? controller.highResCoverUrl.value
+                          : detail.imgUrl,
+                    }),
                     child: CachedNetworkImage(
                       width: 120,
                       height: 180,

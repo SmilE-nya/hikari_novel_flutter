@@ -34,6 +34,9 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
   String errorMsg = "";
   Rxn<NovelDetail> novelDetail = Rxn();
 
+  /// 从首章插图获取的高清封面 URL
+  RxString highResCoverUrl = RxString('');
+
   RxSet<String> cachedChapter = RxSet();
 
   RxBool isInBookshelf = false.obs;
@@ -236,6 +239,7 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
               isInBookshelf.value = bs.any((e) => e.aid == aid);
 
               pageState.value = PageState.success;
+              _fetchHighResCover(); // 异步获取高清封面，不阻塞页面
               await DBService.instance.upsertNovelDetail(NovelDetailEntityData(aid: aid, json: novelDetail.value!.toString())); //缓存小说详情
             }
           case Error():
@@ -253,6 +257,25 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
           errorMsg = nd.error.toString();
           pageState.value = PageState.error;
         }
+    }
+  }
+
+  /// 异步获取首章插图作为高清封面 URL
+  Future<void> _fetchHighResCover() async {
+    final detail = novelDetail.value;
+    if (detail == null || detail.catalogue.isEmpty) return;
+    final firstVol = detail.catalogue.first;
+    if (firstVol.chapters.isEmpty) return;
+    final firstCid = firstVol.chapters.first.cid;
+    final result = await Api.getNovelContent(aid: aid, cid: firstCid);
+    switch (result) {
+      case Success():
+        final url = Parser.getFirstIllustration(result.data);
+        if (url != null && url.isNotEmpty) {
+          highResCoverUrl.value = url;
+        }
+      case Error():
+        break;
     }
   }
 
