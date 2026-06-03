@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/pages/bookshelf/controller.dart';
@@ -9,6 +8,7 @@ import '../../../models/page_state.dart';
 import '../../../network/request.dart';
 import '../../../router/app_sub_router.dart';
 import '../../../widgets/keep_alive_wrapper.dart';
+import '../../../widgets/lazy_cover_image.dart';
 import '../../../widgets/novel_cover_card.dart';
 import '../../../widgets/state_page.dart';
 import '../../setting/controller.dart';
@@ -59,19 +59,17 @@ class BookshelfContentView extends StatelessWidget {
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardBorderRadius)),
                                 elevation: 0,
                                 clipBehavior: Clip.antiAlias,
-                                child: SizedBox(
-                                  height: 100,
-                                  child: AspectRatio(
-                                    aspectRatio: 9 / 13,
-                                    child: CachedNetworkImage(
-                                      imageUrl: item.img,
-                                      httpHeaders: Request.userAgent,
-                                      fit: BoxFit.cover,
-                                      progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                                      errorWidget: (context, url, error) => const Icon(Icons.error_outline),
+                                  child: SizedBox(
+                                    height: 100,
+                                    child: AspectRatio(
+                                      aspectRatio: 9 / 13,
+                                      child: LazyCoverImage(
+                                        lowResUrl: item.img,
+                                        aid: item.aid,
+                                        headers: Request.userAgent,
+                                      ),
                                     ),
                                   ),
-                                ),
                               ),
                               const SizedBox(width: 10),
                               Expanded(

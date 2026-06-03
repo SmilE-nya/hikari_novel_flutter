@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/common/constants.dart';
@@ -6,6 +5,7 @@ import 'package:hikari_novel_flutter/models/bookshelf.dart';
 import 'package:hikari_novel_flutter/models/novel_cover.dart';
 import 'package:hikari_novel_flutter/network/request.dart';
 import 'package:hikari_novel_flutter/router/app_sub_router.dart';
+import 'package:hikari_novel_flutter/widgets/lazy_cover_image.dart';
 
 class NovelCoverCard extends StatelessWidget {
   final NovelCover novelCover;
@@ -25,16 +25,10 @@ class NovelCoverCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 9 / 13.5,
-              child: CachedNetworkImage(
-                imageUrl: novelCover.imageUrl!,
-                httpHeaders: Request.userAgent,
-                imageBuilder: (context, imageProvider) => Image(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.high,
-                ),
-                progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                errorWidget: (context, url, error) => Column(children: [Icon(Icons.error_outline), Text(error.toString())]),
+              child: LazyCoverImage(
+                lowResUrl: novelCover.imageUrl!,
+                aid: novelCover.aid,
+                headers: Request.userAgent,
               ),
             ),
             Positioned.fill(
@@ -93,16 +87,10 @@ class BookshelfCoverCard extends StatelessWidget {
               children: [
                 AspectRatio(
                   aspectRatio: 9 / 13.5,
-                  child: CachedNetworkImage(
-                    imageUrl: bookshelfNovelInfo.img,
-                    httpHeaders: Request.userAgent,
-                    imageBuilder: (context, imageProvider) => Image(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                      filterQuality: FilterQuality.high,
-                    ),
-                    progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                    errorWidget: (context, url, error) => Column(children: [Icon(Icons.error_outline), Text(error.toString())]),
+                  child: LazyCoverImage(
+                    lowResUrl: bookshelfNovelInfo.img,
+                    aid: bookshelfNovelInfo.aid,
+                    headers: Request.userAgent,
                   ),
                 ),
                 Positioned.fill(

@@ -62,7 +62,8 @@ class LocalStorageService extends GetxService {
       kUserBookshelfLayout = "userBookshelfLayout",
       kReaderParaSpacing = "readerParaSpacing",
       kReaderBottomStatusBarHorizontalSpacing = "readerBottomStatusBarHorizontalSpacing",
-      kExportPath = "exportPath";
+      kExportPath = "exportPath",
+      kHighResCoverCache = "highResCoverCache";
 
   Future<void> init() async {
     final Directory dir = await getApplicationSupportDirectory();
@@ -267,4 +268,16 @@ class LocalStorageService extends GetxService {
   String? getExportPath() => _setting.get(kExportPath);
 
   void setExportPath(String path) => _setting.put(kExportPath, path);
+
+  /// 高清封面 URL 缓存（aid → url）
+  String? getHighResCoverUrl(String aid) {
+    final cache = _setting.get(kHighResCoverCache, defaultValue: <String, String>{}) as Map;
+    return cache[aid] as String?;
+  }
+
+  void setHighResCoverUrl(String aid, String url) {
+    final cache = Map<String, String>.from(_setting.get(kHighResCoverCache, defaultValue: <String, String>{}) as Map);
+    cache[aid] = url;
+    _setting.put(kHighResCoverCache, cache);
+  }
 }

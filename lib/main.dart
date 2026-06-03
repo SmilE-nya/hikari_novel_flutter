@@ -136,6 +136,7 @@ class BuildMainApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: kAppName,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: currentThemeValue == ThemeMode.dark ? darkColorScheme : lightColorScheme,
