@@ -25,7 +25,8 @@ import '../../network/api.dart';
 import '../../service/db_service.dart';
 import '../../service/local_storage_service.dart';
 
-class NovelDetailController extends GetxController with GetSingleTickerProviderStateMixin {
+class NovelDetailController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final String aid;
 
   NovelDetailController({required this.aid});
@@ -57,8 +58,16 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
   @override
   void onInit() {
     super.onInit();
-    _fabAnimationCtr = AnimationController(vsync: this, duration: const Duration(milliseconds: 100))..forward();
-    animation = _fabAnimationCtr.drive(Tween<Offset>(begin: const Offset(0.0, 2.0), end: Offset.zero).chain(CurveTween(curve: Curves.easeInOut)));
+    _fabAnimationCtr = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    )..forward();
+    animation = _fabAnimationCtr.drive(
+      Tween<Offset>(
+        begin: const Offset(0.0, 2.0),
+        end: Offset.zero,
+      ).chain(CurveTween(curve: Curves.easeInOut)),
+    );
   }
 
   @override
@@ -97,7 +106,8 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
 
   //切换某个章节的选中状态（假设 chapter.isSelected 是 RxBool）
   void toggleChapterSelection(int volumeIndex, int chapterIndex) {
-    final chapter = novelDetail.value!.catalogue[volumeIndex].chapters[chapterIndex];
+    final chapter =
+        novelDetail.value!.catalogue[volumeIndex].chapters[chapterIndex];
     chapter.isSelected.toggle();
     _syncVolumeSelection(volumeIndex);
   }
@@ -211,7 +221,9 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
   }
 
   void checkIsChapterCached(String cid) async {
-    if (await File("${_supportDir.path}/cached_chapter/${aid}_$cid.txt").exists()) {
+    if (await File(
+      "${_supportDir.path}/cached_chapter/${aid}_$cid.txt",
+    ).exists()) {
       cachedChapter.add(cid);
     } else {
       cachedChapter.remove(cid);
@@ -233,14 +245,26 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
               data.catalogue.addAll(Parser.getCatalogue(cat.data));
               novelDetail.value = data;
 
-              DBService.instance.upsertBrowsingHistory(BrowsingHistoryEntityData(aid: aid, title: data.title, img: data.imgUrl, time: DateTime.now()));
+              DBService.instance.upsertBrowsingHistory(
+                BrowsingHistoryEntityData(
+                  aid: aid,
+                  title: data.title,
+                  img: data.imgUrl,
+                  time: DateTime.now(),
+                ),
+              );
 
               final bs = await DBService.instance.getAllBookshelf();
               isInBookshelf.value = bs.any((e) => e.aid == aid);
 
               pageState.value = PageState.success;
               _fetchHighResCover(); // 异步获取高清封面，不阻塞页面
-              await DBService.instance.upsertNovelDetail(NovelDetailEntityData(aid: aid, json: novelDetail.value!.toString())); //缓存小说详情
+              await DBService.instance.upsertNovelDetail(
+                NovelDetailEntityData(
+                  aid: aid,
+                  json: novelDetail.value!.toString(),
+                ),
+              ); //缓存小说详情
             }
           case Error():
             {
@@ -305,7 +329,9 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
                 icon: const Icon(Icons.warning_amber_outlined),
                 title: Text("warning".tr),
                 content: Text("add_to_bookshelf_failed_tip".tr),
-                actions: [TextButton(onPressed: Get.back, child: Text("confirm".tr))],
+                actions: [
+                  TextButton(onPressed: Get.back, child: Text("confirm".tr)),
+                ],
               ),
             );
             isInBookshelf.value = false;
@@ -316,7 +342,9 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
         }
       case Error():
         {
-          showErrorDialog(result.error.toString(), [TextButton(onPressed: Get.back, child: Text("confirm".tr))]);
+          showErrorDialog(result.error.toString(), [
+            TextButton(onPressed: Get.back, child: Text("confirm".tr)),
+          ]);
         }
     }
     _isAdding = false;
@@ -336,7 +364,9 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
         }
       case Error():
         {
-          showErrorDialog(result.error.toString(), [TextButton(onPressed: Get.back, child: Text("confirm".tr))]);
+          showErrorDialog(result.error.toString(), [
+            TextButton(onPressed: Get.back, child: Text("confirm".tr)),
+          ]);
         }
     }
     _isRemoving = false;
@@ -353,7 +383,10 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
 
   Future<void> openWithBrowser() async {
     if (!await launchUrl(Uri.parse("${Api.wenku8Node.node}/book/$aid.htm"))) {
-      showSnackBar(message: "unable_to_open_external_browser".tr, context: Get.context!);
+      showSnackBar(
+        message: "unable_to_open_external_browser".tr,
+        context: Get.context!,
+      );
     }
   }
 
@@ -362,12 +395,14 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
     if (data == null) {
       return false;
     } else {
-      bool isDualPage = switch (LocalStorageService.instance.getReaderDualPageMode()) {
+      bool isDualPage = switch (LocalStorageService.instance
+          .getReaderDualPageMode()) {
         DualPageMode.auto => Get.context!.shouldAutoUseDualPage(),
         DualPageMode.enabled => true,
         DualPageMode.disabled => false,
       };
-      bool isSameReaderMode = switch (LocalStorageService.instance.getReaderDirection()) {
+      bool isSameReaderMode = switch (LocalStorageService.instance
+          .getReaderDirection()) {
         ReaderDirection.leftToRight => data.readerMode == kPageReadMode,
         ReaderDirection.rightToLeft => data.readerMode == kPageReadMode,
         ReaderDirection.upToDown => data.readerMode == kScrollReadMode,
@@ -381,7 +416,8 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
       return "unread".tr;
     }
 
-    bool isDualPage = switch (LocalStorageService.instance.getReaderDualPageMode()) {
+    bool isDualPage = switch (LocalStorageService.instance
+        .getReaderDualPageMode()) {
       DualPageMode.auto => Get.context!.shouldAutoUseDualPage(),
       DualPageMode.enabled => true,
       DualPageMode.disabled => false,
@@ -389,15 +425,21 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
 
     final currDirection = LocalStorageService.instance.getReaderDirection();
     if (result.isDualPage == isDualPage) {
-      if ((result.readerMode == kScrollReadMode && currDirection == ReaderDirection.upToDown) ||
-          (result.readerMode == kPageReadMode && (currDirection == ReaderDirection.leftToRight || currDirection == ReaderDirection.rightToLeft))) {
+      if ((result.readerMode == kScrollReadMode &&
+              currDirection == ReaderDirection.upToDown) ||
+          (result.readerMode == kPageReadMode &&
+              (currDirection == ReaderDirection.leftToRight ||
+                  currDirection == ReaderDirection.rightToLeft))) {
         return "${result.progress}%";
       }
     }
     return "unable_to_use_read_history_tip".tr;
   }
 
-  String getReadHistoryProgressByVolume(List<ReadHistoryEntityData> list, int totalNum) {
+  String getReadHistoryProgressByVolume(
+    List<ReadHistoryEntityData> list,
+    int totalNum,
+  ) {
     int readCompletedNum = 0;
     int readPartiallyNum = 0;
 
@@ -405,7 +447,8 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
       return "unread".tr;
     }
 
-    bool isDualPage = switch (LocalStorageService.instance.getReaderDualPageMode()) {
+    bool isDualPage = switch (LocalStorageService.instance
+        .getReaderDualPageMode()) {
       DualPageMode.auto => Get.context!.shouldAutoUseDualPage(),
       DualPageMode.enabled => true,
       DualPageMode.disabled => false,
@@ -413,8 +456,11 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
     final currDirection = LocalStorageService.instance.getReaderDirection();
     for (ReadHistoryEntityData d in list) {
       if (d.isDualPage == isDualPage) {
-        if ((d.readerMode == kScrollReadMode && currDirection == ReaderDirection.upToDown) ||
-            (d.readerMode == kPageReadMode && (currDirection == ReaderDirection.leftToRight || currDirection == ReaderDirection.rightToLeft))) {
+        if ((d.readerMode == kScrollReadMode &&
+                currDirection == ReaderDirection.upToDown) ||
+            (d.readerMode == kPageReadMode &&
+                (currDirection == ReaderDirection.leftToRight ||
+                    currDirection == ReaderDirection.rightToLeft))) {
           if (d.progress == 100) {
             readCompletedNum++;
           } else {
@@ -426,7 +472,8 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
 
     if (readCompletedNum == totalNum) {
       return "all_reading_completed".tr;
-    } else if (readPartiallyNum > 0 || (readCompletedNum > 0 && readCompletedNum < totalNum)) {
+    } else if (readPartiallyNum > 0 ||
+        (readCompletedNum > 0 && readCompletedNum < totalNum)) {
       return "partially_read".tr;
     } else {
       return "unread".tr;
@@ -445,7 +492,9 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
     for (final vol in detail.catalogue) {
       for (final ch in vol.chapters) {
         if (!cachedChapter.contains(ch.cid)) continue;
-        final file = File("${_supportDir.path}/cached_chapter/${aid}_${ch.cid}.txt");
+        final file = File(
+          "${_supportDir.path}/cached_chapter/${aid}_${ch.cid}.txt",
+        );
         if (await file.exists()) {
           final content = await file.readAsString();
           result.add(_CachedChapter(title: ch.title, content: content));
@@ -508,7 +557,10 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
         buffer.writeln('');
       }
       await file.writeAsString(buffer.toString(), encoding: utf8);
-      showSnackBar(message: "${"export_success".tr}: $fileName", context: Get.context!);
+      showSnackBar(
+        message: "${"export_success".tr}: $fileName",
+        context: Get.context!,
+      );
     } catch (e) {
       showSnackBar(message: "export_failed".tr, context: Get.context!);
     }
@@ -525,7 +577,11 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
     try {
       final archive = Archive();
       // mimetype — MUST be first, MUST be stored (no compression)
-      final mt = ArchiveFile('mimetype', 20, utf8.encode('application/epub+zip'));
+      final mt = ArchiveFile(
+        'mimetype',
+        20,
+        utf8.encode('application/epub+zip'),
+      );
       archive.addFile(mt);
       // META-INF/container.xml
       final containerXml = '''<?xml version="1.0"?>
@@ -534,7 +590,13 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
     <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
   </rootfiles>
 </container>''';
-      archive.addFile(ArchiveFile('META-INF/container.xml', containerXml.length, utf8.encode(containerXml)));
+      archive.addFile(
+        ArchiveFile(
+          'META-INF/container.xml',
+          containerXml.length,
+          utf8.encode(containerXml),
+        ),
+      );
 
       // Build chapter XHTML
       final StringBuffer manifest = StringBuffer();
@@ -546,7 +608,8 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
         final id = 'chapter_${i + 1}';
         final href = '$id.xhtml';
         final htmlContent = _escapeXml(ch.content).replaceAll('\n', '<br/>');
-        final xhtml = '''<?xml version="1.0" encoding="utf-8"?>
+        final xhtml =
+            '''<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>${_escapeXml(ch.title)}</title>
@@ -556,20 +619,30 @@ class NovelDetailController extends GetxController with GetSingleTickerProviderS
 <p>$htmlContent</p>
 </body>
 </html>''';
-        archive.addFile(ArchiveFile('OEBPS/$href', xhtml.length, utf8.encode(xhtml)));
-        manifest.writeln('    <item id="$id" href="$href" media-type="application/xhtml+xml"/>');
+        archive.addFile(
+          ArchiveFile('OEBPS/$href', xhtml.length, utf8.encode(xhtml)),
+        );
+        manifest.writeln(
+          '    <item id="$id" href="$href" media-type="application/xhtml+xml"/>',
+        );
         spine.writeln('    <itemref idref="$id"/>');
-        navItems.writeln('    <li><a href="$href">${_escapeXml(ch.title)}</a></li>');
+        navItems.writeln(
+          '    <li><a href="$href">${_escapeXml(ch.title)}</a></li>',
+        );
       }
 
       // styles.css
-      final styles = '''body { font-family: serif; line-height: 1.8; padding: 1em; }
+      final styles =
+          '''body { font-family: serif; line-height: 1.8; padding: 1em; }
 h1 { text-align: center; font-size: 1.4em; margin-bottom: 1em; }
 p { text-indent: 2em; margin: 0.5em 0; }''';
-      archive.addFile(ArchiveFile('OEBPS/styles.css', styles.length, utf8.encode(styles)));
+      archive.addFile(
+        ArchiveFile('OEBPS/styles.css', styles.length, utf8.encode(styles)),
+      );
 
       // nav.xhtml
-      final navXhtml = '''<?xml version="1.0" encoding="utf-8"?>
+      final navXhtml =
+          '''<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
 <head><title>${_escapeXml(detail.title)}</title></head>
@@ -582,10 +655,13 @@ $navItems
 </nav>
 </body>
 </html>''';
-      archive.addFile(ArchiveFile('OEBPS/nav.xhtml', navXhtml.length, utf8.encode(navXhtml)));
+      archive.addFile(
+        ArchiveFile('OEBPS/nav.xhtml', navXhtml.length, utf8.encode(navXhtml)),
+      );
 
       // content.opf
-      final opf = '''<?xml version="1.0" encoding="utf-8"?>
+      final opf =
+          '''<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="book-id" version="3.0">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:identifier id="book-id">urn:uuid:${DateTime.now().millisecondsSinceEpoch}</dc:identifier>
@@ -601,12 +677,17 @@ $manifest
 $spine
   </spine>
 </package>''';
-      archive.addFile(ArchiveFile('OEBPS/content.opf', opf.length, utf8.encode(opf)));
+      archive.addFile(
+        ArchiveFile('OEBPS/content.opf', opf.length, utf8.encode(opf)),
+      );
 
       // Encode ZIP
       final encoded = ZipEncoder().encode(archive);
       await file.writeAsBytes(encoded);
-      showSnackBar(message: "${"export_success".tr}: $fileName", context: Get.context!);
+      showSnackBar(
+        message: "${"export_success".tr}: $fileName",
+        context: Get.context!,
+      );
     } catch (e) {
       showSnackBar(message: "export_failed".tr, context: Get.context!);
     }
@@ -625,10 +706,16 @@ $spine
   }
 
   String _escapeXml(String s) {
-    return s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;');
+    return s
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&apos;');
   }
 
-  void deleteAllReadHistory() async => DBService.instance.deleteAllReadHistory();
+  void deleteAllReadHistory() async =>
+      DBService.instance.deleteAllReadHistory();
 
   Future<void> markAsUnRead() async {
     for (var chapter in getSelectedChapters()) {
@@ -638,8 +725,13 @@ $spine
 
   Future<void> markAsRead() async {
     // 1为滚动模式，2为翻页模式，翻页模式的左右方向不影响阅读记录的使用
-    final readerMode = LocalStorageService.instance.getReaderDirection() == ReaderDirection.upToDown ? kScrollReadMode : kPageReadMode;
-    bool isDualPage = switch (LocalStorageService.instance.getReaderDualPageMode()) {
+    final readerMode =
+        LocalStorageService.instance.getReaderDirection() ==
+            ReaderDirection.upToDown
+        ? kScrollReadMode
+        : kPageReadMode;
+    bool isDualPage = switch (LocalStorageService.instance
+        .getReaderDualPageMode()) {
       DualPageMode.auto => Get.context!.shouldAutoUseDualPage(),
       DualPageMode.enabled => true,
       DualPageMode.disabled => false,
@@ -650,7 +742,15 @@ $spine
 
       if (data == null) {
         DBService.instance.upsertReadHistoryDirectly(
-          ReadHistoryEntityData(cid: chapter.cid, aid: aid, readerMode: readerMode, isDualPage: isDualPage, location: 0, progress: 100, isLatest: false),
+          ReadHistoryEntityData(
+            cid: chapter.cid,
+            aid: aid,
+            readerMode: readerMode,
+            isDualPage: isDualPage,
+            location: 0,
+            progress: 100,
+            isLatest: false,
+          ),
         );
       } else {
         DBService.instance.upsertReadHistoryDirectly(

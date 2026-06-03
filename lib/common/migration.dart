@@ -43,7 +43,9 @@ class Migration {
     //删除旧表
     await appDatabase.customStatement("DROP TABLE read_history_entity;");
     //重命名新表
-    await appDatabase.customStatement("ALTER TABLE read_history_entity_new RENAME TO read_history_entity;");
+    await appDatabase.customStatement(
+      "ALTER TABLE read_history_entity_new RENAME TO read_history_entity;",
+    );
   }
 
   static void fromTwoToThree() {

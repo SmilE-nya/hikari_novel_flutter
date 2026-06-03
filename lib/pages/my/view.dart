@@ -21,10 +21,26 @@ class MyPage extends StatelessWidget {
             const SizedBox(height: 10),
             _buildUserInfoCard(context),
             const SizedBox(height: 20),
-            ListTile(title: Text("browsing_history".tr), leading: const Icon(Icons.history), onTap: AppSubRouter.toBrowsingHistory),
-            ListTile(title: Text("setting".tr), leading: const Icon(Icons.settings_outlined), onTap: AppSubRouter.toSetting),
-            ListTile(title: Text("about".tr), leading: const Icon(Icons.info_outline), onTap: AppSubRouter.toAbout),
-            ListTile(title: Text("logout".tr), leading: const Icon(Icons.logout), onTap: controller.logout),
+            ListTile(
+              title: Text("browsing_history".tr),
+              leading: const Icon(Icons.history),
+              onTap: AppSubRouter.toBrowsingHistory,
+            ),
+            ListTile(
+              title: Text("setting".tr),
+              leading: const Icon(Icons.settings_outlined),
+              onTap: AppSubRouter.toSetting,
+            ),
+            ListTile(
+              title: Text("about".tr),
+              leading: const Icon(Icons.info_outline),
+              onTap: AppSubRouter.toAbout,
+            ),
+            ListTile(
+              title: Text("logout".tr),
+              leading: const Icon(Icons.logout),
+              onTap: controller.logout,
+            ),
           ],
         ),
       ),
@@ -33,7 +49,9 @@ class MyPage extends StatelessWidget {
 
   Widget _buildUserInfoCard(BuildContext context) {
     return Card.outlined(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardBorderRadius)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(kCardBorderRadius),
+      ),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: () => {AppSubRouter.toUserInfo()},
@@ -46,7 +64,12 @@ class MyPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: controller.userInfo.value == null
                     ? const CircleAvatar()
-                    : CircleAvatar(backgroundImage: CachedNetworkImageProvider(controller.userInfo.value!.avatar, headers: Request.userAgent)),
+                    : CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider(
+                          controller.userInfo.value!.avatar,
+                          headers: Request.userAgent,
+                        ),
+                      ),
               ),
             ),
             const SizedBox(width: 2),
@@ -56,7 +79,7 @@ class MyPage extends StatelessWidget {
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 overflow: TextOverflow.ellipsis,
               ),
-            )
+            ),
           ],
         ),
       ),

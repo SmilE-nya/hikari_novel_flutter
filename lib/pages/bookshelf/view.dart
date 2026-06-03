@@ -11,10 +11,15 @@ import '../../widgets/state_page.dart';
 
 class BookshelfPage extends StatelessWidget {
   final controller = Get.put(BookshelfController());
-  final searchTextEditController = Get.put(TextEditingController(), tag: "searchTextEditController");
+  final searchTextEditController = Get.put(
+    TextEditingController(),
+    tag: "searchTextEditController",
+  );
 
   BookshelfContentController get currentTabController =>
-      Get.find<BookshelfContentController>(tag: "BookshelfContentController ${controller.tabController.index}");
+      Get.find<BookshelfContentController>(
+        tag: "BookshelfContentController ${controller.tabController.index}",
+      );
 
   BookshelfPage({super.key});
 
@@ -36,8 +41,19 @@ class BookshelfPage extends StatelessWidget {
       },
       child: Stack(
         children: [
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.bookshelfContent, child: _buildBookshelfContent(context))),
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.bookshelfSearch, child: BookshelfSearchView())),
+          Obx(
+            () => Offstage(
+              offstage:
+                  controller.pageState.value != PageState.bookshelfContent,
+              child: _buildBookshelfContent(context),
+            ),
+          ),
+          Obx(
+            () => Offstage(
+              offstage: controller.pageState.value != PageState.bookshelfSearch,
+              child: BookshelfSearchView(),
+            ),
+          ),
         ],
       ),
     );
@@ -49,8 +65,13 @@ class BookshelfPage extends StatelessWidget {
         appBar: _buildAppBar(context),
         body: TabBarView(
           controller: controller.tabController,
-          physics: controller.isSelectionMode.value ? const NeverScrollableScrollPhysics() : const BouncingScrollPhysics(),
-          children: Iterable.generate(6, (index) => BookshelfContentView(classId: index.toString())).toList(),
+          physics: controller.isSelectionMode.value
+              ? const NeverScrollableScrollPhysics()
+              : const BouncingScrollPhysics(),
+          children: Iterable.generate(
+            6,
+            (index) => BookshelfContentView(classId: index.toString()),
+          ).toList(),
         ),
         bottomNavigationBar: _buildBottomBar(context),
       ),
@@ -67,8 +88,14 @@ class BookshelfPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
         titleSpacing: 0,
         actions: [
-          IconButton(onPressed: currentTabController.selectAll, icon: const Icon(Icons.select_all)),
-          IconButton(onPressed: currentTabController.deselect, icon: const Icon(Icons.deselect)),
+          IconButton(
+            onPressed: currentTabController.selectAll,
+            icon: const Icon(Icons.select_all),
+          ),
+          IconButton(
+            onPressed: currentTabController.deselect,
+            icon: const Icon(Icons.deselect),
+          ),
         ],
       );
     }
@@ -85,19 +112,30 @@ class BookshelfPage extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () async {
-            showSnackBar(message: "refresh_bookshelf_tip".tr, context: Get.context!);
+            showSnackBar(
+              message: "refresh_bookshelf_tip".tr,
+              context: Get.context!,
+            );
             final string = await controller.refreshBookshelf();
             showSnackBar(message: string, context: Get.context!);
           },
           icon: const Icon(Icons.sync),
         ),
-        IconButton(onPressed: () => controller.pageState.value = PageState.bookshelfSearch, icon: const Icon(Icons.search)),
+        IconButton(
+          onPressed: () =>
+              controller.pageState.value = PageState.bookshelfSearch,
+          icon: const Icon(Icons.search),
+        ),
       ],
     );
   }
 
   Widget? _buildBottomBar(BuildContext context) {
-    if (controller.isSelectionMode.value && context.isLargeScreen()) return CommonWidgets.bookshelfBottomActionBar(currentTabController, controller);
+    if (controller.isSelectionMode.value && context.isLargeScreen())
+      return CommonWidgets.bookshelfBottomActionBar(
+        currentTabController,
+        controller,
+      );
     return null;
   }
 }

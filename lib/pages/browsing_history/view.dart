@@ -23,7 +23,13 @@ class BrowsingHistoryPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("browsing_history".tr),
         titleSpacing: 0,
-        actions: [IconButton(onPressed: controller.deleteAllBrowsingHistory, icon: Icon(Icons.delete_sweep_outlined), tooltip: "delete_all_browsing_history".tr)],
+        actions: [
+          IconButton(
+            onPressed: controller.deleteAllBrowsingHistory,
+            icon: Icon(Icons.delete_sweep_outlined),
+            tooltip: "delete_all_browsing_history".tr,
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -38,7 +44,8 @@ class BrowsingHistoryPage extends StatelessWidget {
                       return BrowsingHistoryCard(
                         vh: item,
                         onTap: () => AppSubRouter.toNovelDetail(aid: item.aid),
-                        onDelete: () => DBService.instance.deleteBrowsingHistory(item.aid),
+                        onDelete: () =>
+                            DBService.instance.deleteBrowsingHistory(item.aid),
                       );
                     }).toList(),
                   );
@@ -52,7 +59,11 @@ class BrowsingHistoryPage extends StatelessWidget {
                       maxItemsPerRow: settingController.gridColumnCount.value,
                       children: controller.list.map((item) {
                         return NovelCoverCard(
-                          novelCover: NovelCover(item.title, item.img, item.aid),
+                          novelCover: NovelCover(
+                            item.title,
+                            item.img,
+                            item.aid,
+                          ),
                         );
                       }).toList(),
                     ),
@@ -61,8 +72,18 @@ class BrowsingHistoryPage extends StatelessWidget {
               }),
             ),
           ),
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: LoadingPage())),
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.empty, child: EmptyPage())),
+          Obx(
+            () => Offstage(
+              offstage: controller.pageState.value != PageState.loading,
+              child: LoadingPage(),
+            ),
+          ),
+          Obx(
+            () => Offstage(
+              offstage: controller.pageState.value != PageState.empty,
+              child: EmptyPage(),
+            ),
+          ),
         ],
       ),
     );

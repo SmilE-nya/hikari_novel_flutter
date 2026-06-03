@@ -14,7 +14,8 @@ class HtmlDebugLogger {
     }
   }
 
-  static String _safe(String s) => s.replaceAll(RegExp(r'[\\/:*?"<>|\s]+'), '_');
+  static String _safe(String s) =>
+      s.replaceAll(RegExp(r'[\\/:*?"<>|\s]+'), '_');
 
   static Future<File> _logFile() async {
     final dir = await _baseDir();
@@ -65,7 +66,11 @@ class HtmlDebugLogger {
         buffer.writeln(htmlPreview);
       }
       buffer.writeln('');
-      await file.writeAsString(buffer.toString(), mode: FileMode.append, flush: true);
+      await file.writeAsString(
+        buffer.toString(),
+        mode: FileMode.append,
+        flush: true,
+      );
     } catch (_) {}
   }
 
@@ -79,12 +84,17 @@ class HtmlDebugLogger {
     if (!_enabled) return;
     try {
       final d = await _dumpDir();
-      final ts = DateTime.now().toIso8601String().replaceAll(':', '').replaceAll('-', '');
+      final ts = DateTime.now()
+          .toIso8601String()
+          .replaceAll(':', '')
+          .replaceAll('-', '');
       final name = 'html_dump_${ts}_${_safe(scene)}.html';
       final f = File('${d.path}/$name');
 
       const maxBytes = 1024 * 1024 * 2;
-      final content = html.length > maxBytes ? html.substring(0, maxBytes) : html;
+      final content = html.length > maxBytes
+          ? html.substring(0, maxBytes)
+          : html;
       await f.writeAsString(content, flush: true);
 
       final meta = <String, dynamic>{
@@ -94,11 +104,22 @@ class HtmlDebugLogger {
         'title': ?title,
         'headers': ?headers,
       };
-      final metaFile = File('${d.path}/${name.replaceAll('.html', '.meta.json')}');
-      await metaFile.writeAsString(const JsonEncoder.withIndent('  ').convert(meta), flush: true);
+      final metaFile = File(
+        '${d.path}/${name.replaceAll('.html', '.meta.json')}',
+      );
+      await metaFile.writeAsString(
+        const JsonEncoder.withIndent('  ').convert(meta),
+        flush: true,
+      );
 
       final preview = html.length > 500 ? html.substring(0, 500) : html;
-      await log(scene: scene, url: url, title: title, htmlPreview: preview, headers: headers);
+      await log(
+        scene: scene,
+        url: url,
+        title: title,
+        htmlPreview: preview,
+        headers: headers,
+      );
     } catch (_) {}
   }
 }

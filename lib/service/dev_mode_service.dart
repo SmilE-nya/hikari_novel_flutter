@@ -6,14 +6,15 @@ class DevModeService extends GetxService {
 
   final RxBool enabled = false.obs;
 
-  void init() => enabled.value = LocalStorageService.instance.getDevModeEnabled();
+  void init() =>
+      enabled.value = LocalStorageService.instance.getDevModeEnabled();
 
   void enable() {
     enabled.value = true;
     LocalStorageService.instance.setDevModeEnabled(true);
   }
 
-  void disable()  {
+  void disable() {
     enabled.value = false;
     LocalStorageService.instance.setDevModeEnabled(false);
   }

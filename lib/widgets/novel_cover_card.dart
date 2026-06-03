@@ -18,7 +18,9 @@ class NovelCoverCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(kCardBorderRadius),
       onTap: () => AppSubRouter.toNovelDetail(aid: novelCover.aid),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardBorderRadius)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(kCardBorderRadius),
+        ),
         elevation: 0,
         clipBehavior: Clip.antiAlias,
         child: Stack(
@@ -37,7 +39,10 @@ class NovelCoverCard extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.center,
                     end: Alignment.bottomCenter, // 渐变到图片一半
-                    colors: [Colors.black.withValues(alpha: 0), Colors.black.withValues(alpha: 1)],
+                    colors: [
+                      Colors.black.withValues(alpha: 0),
+                      Colors.black.withValues(alpha: 1),
+                    ],
                   ),
                 ),
               ),
@@ -68,7 +73,12 @@ class BookshelfCoverCard extends StatelessWidget {
   final Function() onTap;
   final Function() onLongPress;
 
-  const BookshelfCoverCard({super.key, required this.bookshelfNovelInfo, required this.onTap, required this.onLongPress});
+  const BookshelfCoverCard({
+    super.key,
+    required this.bookshelfNovelInfo,
+    required this.onTap,
+    required this.onLongPress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +90,9 @@ class BookshelfCoverCard extends StatelessWidget {
       child: Stack(
         children: [
           Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardBorderRadius)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(kCardBorderRadius),
+            ),
             elevation: 0,
             clipBehavior: Clip.antiAlias,
             child: Stack(
@@ -99,7 +111,10 @@ class BookshelfCoverCard extends StatelessWidget {
                       gradient: LinearGradient(
                         begin: Alignment.center,
                         end: Alignment.bottomCenter, // 渐变到图片一半
-                        colors: [Colors.black.withValues(alpha: 0), Colors.black.withValues(alpha: 1)],
+                        colors: [
+                          Colors.black.withValues(alpha: 0),
+                          Colors.black.withValues(alpha: 1),
+                        ],
                       ),
                     ),
                   ),

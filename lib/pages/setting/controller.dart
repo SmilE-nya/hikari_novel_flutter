@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hikari_novel_flutter/models/common/language.dart';
@@ -8,9 +7,10 @@ import '../../service/local_storage_service.dart';
 
 String _formatExportPath(String? path) => path ?? "export_not_set".tr;
 
-
 class SettingController extends GetxController {
-  RxBool isAutoCheckUpdate = LocalStorageService.instance.getIsAutoCheckUpdate().obs;
+  RxBool isAutoCheckUpdate = LocalStorageService.instance
+      .getIsAutoCheckUpdate()
+      .obs;
   Rx<Language> language = Rx(LocalStorageService.instance.getLanguage());
   RxBool isRelativeTime = LocalStorageService.instance.getIsRelativeTime().obs;
   Rx<Wenku8Node> wenku8Node = Rx(LocalStorageService.instance.getWenku8Node());
@@ -18,9 +18,15 @@ class SettingController extends GetxController {
   RxBool isDynamicColor = LocalStorageService.instance.getIsDynamicColor().obs;
   Rx<Color> customColor = Rx(LocalStorageService.instance.getCustomColor());
   RxInt gridColumnCount = LocalStorageService.instance.getGridColumnCount().obs;
-  RxString exportPath = _formatExportPath(LocalStorageService.instance.getExportPath()).obs;
-  RxInt browsingHistoryLayout = LocalStorageService.instance.getBrowsingHistoryLayout().obs;
-  RxInt userBookshelfLayout = LocalStorageService.instance.getUserBookshelfLayout().obs;
+  RxString exportPath = _formatExportPath(
+    LocalStorageService.instance.getExportPath(),
+  ).obs;
+  RxInt browsingHistoryLayout = LocalStorageService.instance
+      .getBrowsingHistoryLayout()
+      .obs;
+  RxInt userBookshelfLayout = LocalStorageService.instance
+      .getUserBookshelfLayout()
+      .obs;
 
   void changeIsAutoCheckUpdate(bool enabled) {
     isAutoCheckUpdate.value = enabled;
@@ -34,15 +40,19 @@ class SettingController extends GetxController {
 
   void changeLanguage(Language l) async {
     switch (l) {
-      case Language.simplifiedChinese: Get.updateLocale(Locale("zh","CN"));
-      case Language.traditionalChinese: Get.updateLocale(Locale("zh","TW"));
-      case Language.followSystem: {
-        if (Get.deviceLocale! != Locale("zh","CN") && Get.deviceLocale! != Locale("zh","CN")) {
-          Get.updateLocale(Locale("zh","CN"));
-        } else {
-          Get.updateLocale(Get.deviceLocale!);
+      case Language.simplifiedChinese:
+        Get.updateLocale(Locale("zh", "CN"));
+      case Language.traditionalChinese:
+        Get.updateLocale(Locale("zh", "TW"));
+      case Language.followSystem:
+        {
+          if (Get.deviceLocale! != Locale("zh", "CN") &&
+              Get.deviceLocale! != Locale("zh", "CN")) {
+            Get.updateLocale(Locale("zh", "CN"));
+          } else {
+            Get.updateLocale(Get.deviceLocale!);
+          }
         }
-      }
     }
     language.value = l;
     LocalStorageService.instance.setLanguage(l);

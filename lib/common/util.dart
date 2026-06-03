@@ -44,7 +44,9 @@ class Util {
       final info = await PackageInfo.fromPlatform();
       final localVer = info.version; // e.g. "1.2.0-beta.2"
 
-      bool hasNewVersion = localVer.toString() != remoteVer.toString().substring(0, remoteVer.toString().indexOf("+"));
+      bool hasNewVersion =
+          localVer.toString() !=
+          remoteVer.toString().substring(0, remoteVer.toString().indexOf("+"));
 
       //不需要通知且没有新版本，直接返回
       if (!mustNotification && !hasNewVersion) return;
@@ -58,7 +60,10 @@ class Util {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("${"new_version_available".tr}: $remoteVer", style: const TextStyle(fontSize: 16)),
+                      Text(
+                        "${"new_version_available".tr}: $remoteVer",
+                        style: const TextStyle(fontSize: 16),
+                      ),
                       const SizedBox(height: 8),
                       MarkdownBlock(data: data["body"]),
                     ],
@@ -74,7 +79,9 @@ class Util {
           AlertDialog(
             title: Text("check_update".tr),
             content: Text(response.error.toString()),
-            actions: [TextButton(onPressed: Get.back, child: Text("confirm".tr))],
+            actions: [
+              TextButton(onPressed: Get.back, child: Text("confirm".tr)),
+            ],
           ),
         );
       }

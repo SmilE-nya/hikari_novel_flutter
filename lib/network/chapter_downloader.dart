@@ -88,7 +88,8 @@ class ChapterDownloader {
       }
       final savePath = "${cacheDir.path}/${aid}_$cid.txt";
 
-      var url = "${Api.wenku8Node.node}/modules/article/reader.php?aid=$aid&cid=$cid";
+      var url =
+          "${Api.wenku8Node.node}/modules/article/reader.php?aid=$aid&cid=$cid";
       url += "?";
 
       // 设置编码格式
@@ -110,7 +111,7 @@ class ChapterDownloader {
           if (onProgress != null && total > 0) {
             onProgress(received, total);
           }
-        }
+        },
       );
 
       // 检查是否在请求过程中被取消
@@ -141,7 +142,6 @@ class ChapterDownloader {
 
       Log.i('章节 $aid-$cid 下载完成，保存路径：$savePath');
       return savePath;
-
     } on DioException catch (e) {
       // 处理Dio异常（重点处理取消类型）
       if (e.type == DioExceptionType.cancel) {

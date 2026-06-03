@@ -4,5 +4,10 @@ class ReplyItem {
   final String uid;
   final String time;
 
-  ReplyItem({required this.content, required this.userName, required this.uid, required this.time});
+  ReplyItem({
+    required this.content,
+    required this.userName,
+    required this.uid,
+    required this.time,
+  });
 }

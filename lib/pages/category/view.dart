@@ -25,17 +25,35 @@ class CategoryView extends StatelessWidget {
             children: [
               SizedBox(width: 14),
               ActionChip(
-                label: Row(children: [Obx(() => Text(controller.category.value)), Icon(Icons.arrow_drop_down_outlined)]),
+                label: Row(
+                  children: [
+                    Obx(() => Text(controller.category.value)),
+                    Icon(Icons.arrow_drop_down_outlined),
+                  ],
+                ),
                 onPressed: () {
-                  showMenu(context: context, position: RelativeRect.fill, items: _getTagList());
+                  showMenu(
+                    context: context,
+                    position: RelativeRect.fill,
+                    items: _getTagList(),
+                  );
                 },
                 padding: EdgeInsets.zero,
               ),
               SizedBox(width: 10),
               ActionChip(
-                label: Row(children: [Obx(() => Text(controller.sortText.value)), Icon(Icons.arrow_drop_down_outlined)]),
+                label: Row(
+                  children: [
+                    Obx(() => Text(controller.sortText.value)),
+                    Icon(Icons.arrow_drop_down_outlined),
+                  ],
+                ),
                 onPressed: () {
-                  showMenu(context: context, position: RelativeRect.fill, items: _getSortList());
+                  showMenu(
+                    context: context,
+                    position: RelativeRect.fill,
+                    items: _getSortList(),
+                  );
                 },
                 padding: EdgeInsets.zero,
               ),
@@ -58,22 +76,37 @@ class CategoryView extends StatelessWidget {
                           minItemWidth: 100,
                           horizontalGridSpacing: 4,
                           verticalGridSpacing: 4,
-                          maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
-                          children:
-                              controller.data.map((item) {
-                                return NovelCoverCard(novelCover: item);
-                              }).toList(),
+                          maxItemsPerRow: Get.find<SettingController>()
+                              .gridColumnCount
+                              .value,
+                          children: controller.data.map((item) {
+                            return NovelCoverCard(novelCover: item);
+                          }).toList(),
                         ),
                       ),
                     ),
                   ),
                 ),
-                Obx(() => Offstage(offstage: controller.pageState.value != PageState.pleaseSelect, child: PleaseSelectPage())),
-                Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: LoadingPage())),
+                Obx(
+                  () => Offstage(
+                    offstage:
+                        controller.pageState.value != PageState.pleaseSelect,
+                    child: PleaseSelectPage(),
+                  ),
+                ),
+                Obx(
+                  () => Offstage(
+                    offstage: controller.pageState.value != PageState.loading,
+                    child: LoadingPage(),
+                  ),
+                ),
                 Obx(
                   () => Offstage(
                     offstage: controller.pageState.value != PageState.error,
-                    child: ErrorMessage(msg: controller.errorMsg, action: () => controller.getPage(false)),
+                    child: ErrorMessage(
+                      msg: controller.errorMsg,
+                      action: () => controller.getPage(false),
+                    ),
                   ),
                 ),
               ],

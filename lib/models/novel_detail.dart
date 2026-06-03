@@ -19,14 +19,27 @@ class NovelDetail {
   final bool isAnimated;
   List<CatVolume> catalogue = [];
 
-  NovelDetail(this.title, this.author, this.status, this.finUpdate, this.imgUrl, this.introduce, this.tags, this.heat, this.trending, this.isAnimated);
+  NovelDetail(
+    this.title,
+    this.author,
+    this.status,
+    this.finUpdate,
+    this.imgUrl,
+    this.introduce,
+    this.tags,
+    this.heat,
+    this.trending,
+    this.isAnimated,
+  );
 
-  factory NovelDetail.fromJson(Map<String, dynamic> json) => _$NovelDetailFromJson(json);
+  factory NovelDetail.fromJson(Map<String, dynamic> json) =>
+      _$NovelDetailFromJson(json);
 
   Map<String, dynamic> toJson() => _$NovelDetailToJson(this);
 
   @override
   String toString() => jsonEncode(toJson());
-  
-  factory NovelDetail.fromString(String json) => NovelDetail.fromJson(jsonDecode(json));
+
+  factory NovelDetail.fromString(String json) =>
+      NovelDetail.fromJson(jsonDecode(json));
 }

@@ -26,10 +26,21 @@ class HomePage extends StatelessWidget {
         ),
         titleSpacing: 0,
         actions: [
-          IconButton(onPressed: () => AppSubRouter.toSearch(author: null), icon: Icon(Icons.search))
-        ]
+          IconButton(
+            onPressed: () => AppSubRouter.toSearch(author: null),
+            icon: Icon(Icons.search),
+          ),
+        ],
       ),
-      body: TabBarView(controller: controller.tabController, children: [RecommendView(), CategoryView(), RankingView(), CompletionView()]),
+      body: TabBarView(
+        controller: controller.tabController,
+        children: [
+          RecommendView(),
+          CategoryView(),
+          RankingView(),
+          CompletionView(),
+        ],
+      ),
     );
   }
 }

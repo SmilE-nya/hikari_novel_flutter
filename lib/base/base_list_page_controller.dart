@@ -52,7 +52,9 @@ abstract class BaseListPageController<T> extends GetxController {
             pageState.value = PageState.error;
             errorMsg = result.error;
           } else {
-            showErrorDialog(result.error.toString(), [TextButton(onPressed: Get.back, child: Text("confirm".tr))]);
+            showErrorDialog(result.error.toString(), [
+              TextButton(onPressed: Get.back, child: Text("confirm".tr)),
+            ]);
           }
           if (_index > 0) {
             _index -= 1;

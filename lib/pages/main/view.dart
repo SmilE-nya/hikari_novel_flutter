@@ -18,7 +18,9 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return context.isLargeScreen() ? _buildLargeScreenScaffold() : _buildSmallScreenScaffold();
+    return context.isLargeScreen()
+        ? _buildLargeScreenScaffold()
+        : _buildSmallScreenScaffold();
   }
 
   Widget _buildSmallScreenScaffold() {
@@ -26,27 +28,55 @@ class MainPage extends StatelessWidget {
       children: [
         Obx(
           () => Scaffold(
-            body: IndexedStack(index: controller.selectedIndex.value, children: controller.pages),
+            body: IndexedStack(
+              index: controller.selectedIndex.value,
+              children: controller.pages,
+            ),
             bottomNavigationBar: Obx(() {
               if (controller.showBookshelfBottomActionBar.value) {
                 BookshelfController bookshelfController = Get.find();
-                BookshelfContentController currentTabController = Get.find(tag: "BookshelfContentController ${bookshelfController.tabController.index}");
-                return CommonWidgets.bookshelfBottomActionBar(currentTabController, bookshelfController, edgeToEdge: true);
+                BookshelfContentController currentTabController = Get.find(
+                  tag:
+                      "BookshelfContentController ${bookshelfController.tabController.index}",
+                );
+                return CommonWidgets.bookshelfBottomActionBar(
+                  currentTabController,
+                  bookshelfController,
+                  edgeToEdge: true,
+                );
               } else {
                 return NavigationBar(
                   selectedIndex: controller.selectedIndex.value,
-                  onDestinationSelected: (index) => controller.selectedIndex.value = index,
+                  onDestinationSelected: (index) =>
+                      controller.selectedIndex.value = index,
                   destinations: [
-                    NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "home".tr),
-                    NavigationDestination(icon: Icon(Icons.book_outlined), selectedIcon: Icon(Icons.book), label: "bookshelf".tr),
-                    NavigationDestination(icon: Icon(Icons.person_outline), selectedIcon: Icon(Icons.person), label: "my".tr),
+                    NavigationDestination(
+                      icon: Icon(Icons.home_outlined),
+                      selectedIcon: Icon(Icons.home),
+                      label: "home".tr,
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.book_outlined),
+                      selectedIcon: Icon(Icons.book),
+                      label: "bookshelf".tr,
+                    ),
+                    NavigationDestination(
+                      icon: Icon(Icons.person_outline),
+                      selectedIcon: Icon(Icons.person),
+                      label: "my".tr,
+                    ),
                   ],
                 );
               }
             }),
           ),
         ),
-        Obx(() => Offstage(offstage: !controller.showContent.value, child: _buildContentNavigator(controller))),
+        Obx(
+          () => Offstage(
+            offstage: !controller.showContent.value,
+            child: _buildContentNavigator(controller),
+          ),
+        ),
       ],
     );
   }
@@ -59,18 +89,34 @@ class MainPage extends StatelessWidget {
             () => NavigationRail(
               labelType: NavigationRailLabelType.all, //显示所有标签
               destinations: [
-                NavigationRailDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: Text("home".tr)),
-                NavigationRailDestination(icon: Icon(Icons.book_outlined), selectedIcon: Icon(Icons.book), label: Text("bookshelf".tr)),
-                NavigationRailDestination(icon: Icon(Icons.person_outline), selectedIcon: Icon(Icons.person), label: Text("my".tr)),
+                NavigationRailDestination(
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home),
+                  label: Text("home".tr),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.book_outlined),
+                  selectedIcon: Icon(Icons.book),
+                  label: Text("bookshelf".tr),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.person_outline),
+                  selectedIcon: Icon(Icons.person),
+                  label: Text("my".tr),
+                ),
               ],
               selectedIndex: controller.selectedIndex.value,
-              onDestinationSelected: (index) => controller.selectedIndex.value = index,
+              onDestinationSelected: (index) =>
+                  controller.selectedIndex.value = index,
             ),
           ),
           Obx(
             () => Expanded(
               flex: 1,
-              child: IndexedStack(index: controller.selectedIndex.value, children: controller.pages),
+              child: IndexedStack(
+                index: controller.selectedIndex.value,
+                children: controller.pages,
+              ),
             ),
           ),
           Expanded(flex: 1, child: _buildContentNavigator(controller)),
@@ -126,7 +172,8 @@ class SubNavigatorObserver extends NavigatorObserver {
     if (previousRoute != null) {
       var routeName = route.settings.name ?? "";
       AppSubRouter.currentContentRouteName = routeName;
-      Get.find<MainController>().showContent.value = routeName != RoutePath.logo;
+      Get.find<MainController>().showContent.value =
+          routeName != RoutePath.logo;
     }
   }
 

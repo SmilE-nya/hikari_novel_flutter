@@ -18,7 +18,10 @@ class BookshelfContentView extends StatelessWidget {
   final BookshelfContentController controller;
 
   BookshelfContentView({super.key, required this.classId})
-    : controller = Get.put(BookshelfContentController(classId: classId), tag: "BookshelfContentController $classId");
+    : controller = Get.put(
+        BookshelfContentController(classId: classId),
+        tag: "BookshelfContentController $classId",
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -56,20 +59,24 @@ class BookshelfContentView extends StatelessWidget {
                           child: Row(
                             children: [
                               Card(
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardBorderRadius)),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    kCardBorderRadius,
+                                  ),
+                                ),
                                 elevation: 0,
                                 clipBehavior: Clip.antiAlias,
-                                  child: SizedBox(
-                                    height: 100,
-                                    child: AspectRatio(
-                                      aspectRatio: 9 / 13,
-                                      child: LazyCoverImage(
-                                        lowResUrl: item.img,
-                                        aid: item.aid,
-                                        headers: Request.userAgent,
-                                      ),
+                                child: SizedBox(
+                                  height: 100,
+                                  child: AspectRatio(
+                                    aspectRatio: 9 / 13,
+                                    child: LazyCoverImage(
+                                      lowResUrl: item.img,
+                                      aid: item.aid,
+                                      headers: Request.userAgent,
                                     ),
                                   ),
+                                ),
                               ),
                               const SizedBox(width: 10),
                               Expanded(
@@ -77,16 +84,32 @@ class BookshelfContentView extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(item.title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                                      Text(
+                                        item.title,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                       const SizedBox(height: 6),
-                                      Obx(() => Text(
-                                        item.introduce.value.isNotEmpty ? item.introduce.value : '暂无简介',
-                                        style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                      )),
+                                      Obx(
+                                        () => Text(
+                                          item.introduce.value.isNotEmpty
+                                              ? item.introduce.value
+                                              : '暂无简介',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.onSurfaceVariant,
+                                          ),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -129,8 +152,18 @@ class BookshelfContentView extends StatelessWidget {
               }),
             ),
           ),
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: const LoadingPage())),
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.empty, child: const EmptyPage())),
+          Obx(
+            () => Offstage(
+              offstage: controller.pageState.value != PageState.loading,
+              child: const LoadingPage(),
+            ),
+          ),
+          Obx(
+            () => Offstage(
+              offstage: controller.pageState.value != PageState.empty,
+              child: const EmptyPage(),
+            ),
+          ),
         ],
       ),
     );

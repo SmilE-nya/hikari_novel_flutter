@@ -22,32 +22,51 @@ class AboutPage extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
-            child: Center(child: Image.asset("assets/images/logo_transparent.png", width: 200, height: 200)),
+            child: Center(
+              child: Image.asset(
+                "assets/images/logo_transparent.png",
+                width: 200,
+                height: 200,
+              ),
+            ),
           ),
           const Divider(height: 1),
           Obx(
             () => NormalTile(
               title: "version".tr,
-              subtitle: "${controller.version.value}(${controller.buildNumber.value})",
+              subtitle:
+                  "${controller.version.value}(${controller.buildNumber.value})",
               leading: const Icon(Icons.commit),
               onTap: controller.onVersionTap,
             ),
           ),
-          NormalTile(title: "check_update".tr, leading: const Icon(Icons.update), onTap: () => Util.checkUpdate(true)),
+          NormalTile(
+            title: "check_update".tr,
+            leading: const Icon(Icons.update),
+            onTap: () => Util.checkUpdate(true),
+          ),
           NormalTile(
             title: "open_source_license".tr,
             leading: const Icon(Icons.assignment_outlined),
             onTap: () => showLicensePage(
               context: context,
               applicationName: kAppName,
-              applicationIcon: Center(child: Image.asset("assets/images/logo_transparent.png", width: 200, height: 200)),
+              applicationIcon: Center(
+                child: Image.asset(
+                  "assets/images/logo_transparent.png",
+                  width: 200,
+                  height: 200,
+                ),
+              ),
             ),
           ),
           NormalTile(
             title: "Github",
             leading: const Icon(Icons.code),
             trailing: const Icon(Icons.open_in_new),
-            onTap: () => launchUrl(Uri.parse("https://github.com/15dd/hikari_novel_flutter")),
+            onTap: () => launchUrl(
+              Uri.parse("https://github.com/15dd/hikari_novel_flutter"),
+            ),
           ),
           NormalTile(
             title: "Telegram",
@@ -60,7 +79,11 @@ class AboutPage extends StatelessWidget {
                 ? Column(
                     children: [
                       const Divider(height: 1),
-                      NormalTile(title: "dev_setting".tr, leading: const Icon(Icons.developer_mode), onTap: AppSubRouter.toDevTools),
+                      NormalTile(
+                        title: "dev_setting".tr,
+                        leading: const Icon(Icons.developer_mode),
+                        onTap: AppSubRouter.toDevTools,
+                      ),
                     ],
                   )
                 : const SizedBox.shrink(),

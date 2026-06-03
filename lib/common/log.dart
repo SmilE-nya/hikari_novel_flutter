@@ -3,10 +3,7 @@ import 'package:logger/logger.dart';
 class Log {
   static final Logger _logger = Logger(
     printer: PrefixPrinter(
-      PrettyPrinter(
-        methodCount: 3,
-        dateTimeFormat: DateTimeFormat.dateAndTime
-      )
+      PrettyPrinter(methodCount: 3, dateTimeFormat: DateTimeFormat.dateAndTime),
     ),
   );
 

@@ -25,20 +25,27 @@ class RecommendView extends StatelessWidget {
                 child: EasyRefresh(
                   onRefresh: controller.getRecommend,
                   child: ListView(
-                    children:
-                        controller.data.map((item) {
-                          return RecommendBlockView(block: item);
-                        }).toList(),
+                    children: controller.data.map((item) {
+                      return RecommendBlockView(block: item);
+                    }).toList(),
                   ),
                 ),
               ),
             ),
           ),
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: LoadingPage())),
+          Obx(
+            () => Offstage(
+              offstage: controller.pageState.value != PageState.loading,
+              child: LoadingPage(),
+            ),
+          ),
           Obx(
             () => Offstage(
               offstage: controller.pageState.value != PageState.error,
-              child: ErrorMessage(msg: controller.errorMsg, action: controller.getRecommend),
+              child: ErrorMessage(
+                msg: controller.errorMsg,
+                action: controller.getRecommend,
+              ),
             ),
           ),
         ],

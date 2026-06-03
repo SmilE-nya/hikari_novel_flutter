@@ -11,7 +11,12 @@ class BrowsingHistoryCard extends StatelessWidget {
   final Function() onTap;
   final Function() onDelete;
 
-  const BrowsingHistoryCard({super.key, required this.vh, required this.onTap, required this.onDelete});
+  const BrowsingHistoryCard({
+    super.key,
+    required this.vh,
+    required this.onTap,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +27,20 @@ class BrowsingHistoryCard extends StatelessWidget {
         child: Row(
           children: [
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kCardBorderRadius)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(kCardBorderRadius),
+              ),
               elevation: 0,
               clipBehavior: Clip.antiAlias,
               child: SizedBox(
                 height: 100,
                 child: AspectRatio(
                   aspectRatio: 9 / 13,
-                                child: LazyCoverImage(
-                                  lowResUrl: vh.img,
-                                  aid: vh.aid,
-                                  headers: Request.userAgent,
-                                ),
+                  child: LazyCoverImage(
+                    lowResUrl: vh.img,
+                    aid: vh.aid,
+                    headers: Request.userAgent,
+                  ),
                 ),
               ),
             ),
@@ -45,20 +52,32 @@ class BrowsingHistoryCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(vh.title, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    Text(
+                      vh.title,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     SizedBox(height: 6),
-                    Text(Util.getDateTime(vh.time.toString().split('.').first), style: TextStyle(fontSize: 13)),
+                    Text(
+                      Util.getDateTime(vh.time.toString().split('.').first),
+                      style: TextStyle(fontSize: 13),
+                    ),
                   ],
                 ),
               ),
             ),
             const SizedBox(width: 10),
             Center(
-              child: IconButton(onPressed: onDelete, icon: const Icon(Icons.delete_outline))
-            )
+              child: IconButton(
+                onPressed: onDelete,
+                icon: const Icon(Icons.delete_outline),
+              ),
+            ),
           ],
         ),
-      )
+      ),
     );
   }
 }

@@ -21,7 +21,8 @@ class RankingController extends BaseSelectListPageController<NovelCover> {
   }
 
   @override
-  Future<Resource> getData(int index) => Api.getNovelByRanking(ranking: ranking.value, index: index);
+  Future<Resource> getData(int index) =>
+      Api.getNovelByRanking(ranking: ranking.value, index: index);
 
   @override
   List<NovelCover> getParser(String html) => Parser.parseToList(html);

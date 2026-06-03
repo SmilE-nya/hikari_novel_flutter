@@ -46,7 +46,9 @@ class _LazyCoverImageState extends State<LazyCoverImage> {
       if (_highResUrl != null) return;
 
       // 2. 查持久化缓存
-      final cached = LocalStorageService.instance.getHighResCoverUrl(widget.aid);
+      final cached = LocalStorageService.instance.getHighResCoverUrl(
+        widget.aid,
+      );
       if (cached != null && cached.isNotEmpty) {
         if (mounted) setState(() => _highResUrl = cached);
         return;
@@ -60,7 +62,10 @@ class _LazyCoverImageState extends State<LazyCoverImage> {
       final firstCid = volumes.first.chapters.first.cid;
 
       // 4. 获取第一章内容
-      final contentResult = await Api.getNovelContent(aid: widget.aid, cid: firstCid);
+      final contentResult = await Api.getNovelContent(
+        aid: widget.aid,
+        cid: firstCid,
+      );
       if (contentResult is! Success) return;
       final url = Parser.getFirstIllustration(contentResult.data);
       if (url == null || url.isEmpty) return;

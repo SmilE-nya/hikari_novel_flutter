@@ -12,7 +12,10 @@ class AboutController extends GetxController {
     if (_versionTapCount >= 5) {
       _versionTapCount = 0;
       final enabled = DevModeService.instance.toggle();
-      showSnackBar(message: enabled ? "dev_setting_opened".tr : "dev_setting_closed".tr, context: Get.context!);
+      showSnackBar(
+        message: enabled ? "dev_setting_opened".tr : "dev_setting_closed".tr,
+        context: Get.context!,
+      );
       if (enabled) Get.toNamed(RoutePath.devTools);
     }
   }

@@ -11,7 +11,9 @@ import '../common/log.dart';
 import 'local_storage_service.dart';
 
 class TtsService extends GetxService {
-  static const MethodChannel _intentChannel = MethodChannel('hikari/system_intents');
+  static const MethodChannel _intentChannel = MethodChannel(
+    'hikari/system_intents',
+  );
 
   static TtsService get instance => Get.find<TtsService>();
 
@@ -45,7 +47,12 @@ class TtsService extends GetxService {
 
   static const String multiTtsEnginePackage = 'org.nobody.multitts';
 
-  static const List<String> _preferredLocales = <String>['zh-CN', 'zh-TW', 'zh-HK', 'en-US'];
+  static const List<String> _preferredLocales = <String>[
+    'zh-CN',
+    'zh-TW',
+    'zh-HK',
+    'en-US',
+  ];
 
   Future<void> init() async {
     try {
@@ -106,7 +113,10 @@ class TtsService extends GetxService {
     await refreshEngines();
 
     final savedEngine = engine.value;
-    final hasSaved = savedEngine != null && savedEngine.isNotEmpty && engines.contains(savedEngine);
+    final hasSaved =
+        savedEngine != null &&
+        savedEngine.isNotEmpty &&
+        engines.contains(savedEngine);
     if (hasSaved) {
       await applyEngine(savedEngine);
     } else {
@@ -117,7 +127,12 @@ class TtsService extends GetxService {
 
     await refreshVoices();
     final savedVoice = voice.value;
-    if (savedVoice != null && voices.any((v) => v["name"] == savedVoice["name"] && v["locale"] == savedVoice["locale"])) {
+    if (savedVoice != null &&
+        voices.any(
+          (v) =>
+              v["name"] == savedVoice["name"] &&
+              v["locale"] == savedVoice["locale"],
+        )) {
       await applyVoice(savedVoice);
     } else {
       voice.value = null;
@@ -222,7 +237,8 @@ class TtsService extends GetxService {
   Future<void> refreshSettings({bool restartIfPlaying = true}) async {
     if (!enabled.value) return;
 
-    if (restartIfPlaying && (isPlaying.value || isPaused.value || isSessionActive.value)) {
+    if (restartIfPlaying &&
+        (isPlaying.value || isPaused.value || isSessionActive.value)) {
       try {
         await pauseSession();
       } catch (_) {}
@@ -248,7 +264,10 @@ class TtsService extends GetxService {
       await _intentChannel.invokeMethod('openTtsSettings');
     } catch (e) {
       Log.d("[TtsService] openTtsSettings failed: $e");
-      showSnackBar(message: "${"unable_to_open_system_setting".tr}: $e", context: Get.context!);
+      showSnackBar(
+        message: "${"unable_to_open_system_setting".tr}: $e",
+        context: Get.context!,
+      );
     }
   }
 
@@ -381,7 +400,9 @@ class TtsService extends GetxService {
       _endSession();
       return;
     }
-    sessionProgress.value = _chunks.isEmpty ? 0.0 : (_chunkIndex / _chunks.length).clamp(0.0, 1.0);
+    sessionProgress.value = _chunks.isEmpty
+        ? 0.0
+        : (_chunkIndex / _chunks.length).clamp(0.0, 1.0);
   }
 
   Future<void> _prepareForSpeak() async {
@@ -395,9 +416,14 @@ class TtsService extends GetxService {
 
   Future<void> _applyBestLanguage() async {
     final fromVoice = voice.value?['locale'];
-    final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale.toLanguageTag();
+    final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale
+        .toLanguageTag();
 
-    final candidates = <String>{if (fromVoice != null && fromVoice.trim().isNotEmpty) fromVoice, deviceLocale, ..._preferredLocales}.toList();
+    final candidates = <String>{
+      if (fromVoice != null && fromVoice.trim().isNotEmpty) fromVoice,
+      deviceLocale,
+      ..._preferredLocales,
+    }.toList();
 
     for (final loc in candidates) {
       if (await _trySetLanguage(loc)) {
@@ -424,7 +450,9 @@ class TtsService extends GetxService {
   void _handleSpeakResult(dynamic r) {
     if (r is int && r == 0) {
       if (_stopRequested || _pauseRequested) {
-        Log.d("[TtsService] speak() returned 0 but stop/pause was requested; suppressing error");
+        Log.d(
+          "[TtsService] speak() returned 0 but stop/pause was requested; suppressing error",
+        );
         return;
       }
 
@@ -435,7 +463,10 @@ class TtsService extends GetxService {
       if (isSessionActive.value) {
         _endSession();
       }
-      showSnackBar(message: "listen_to_books_failed_tip".tr, context: Get.context!);
+      showSnackBar(
+        message: "listen_to_books_failed_tip".tr,
+        context: Get.context!,
+      );
     }
   }
 
@@ -464,7 +495,11 @@ class TtsService extends GetxService {
   }
 
   List<String> _splitToChunks(String text) {
-    final parts = text.split(RegExp(r'(?<=[。！？!?；;])')).map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+    final parts = text
+        .split(RegExp(r'(?<=[。！？!?；;])'))
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList();
 
     final chunks = <String>[];
     final buf = StringBuffer();

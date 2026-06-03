@@ -16,7 +16,7 @@ class ChapterCacheTask {
     required this.title,
     this.status = CacheStatus.pending,
     this.progress = 0.0,
-    this.onCompleted
+    this.onCompleted,
   });
 
   Map<String, dynamic> toJson() => {
@@ -25,15 +25,16 @@ class ChapterCacheTask {
     "chapterId": cid,
     "title": title,
     "status": statusToString(status),
-    "progress": progress
+    "progress": progress,
   };
 
-  factory ChapterCacheTask.fromJson(Map<String, dynamic> json) => ChapterCacheTask(
-    uuid: json["id"],
-    aid: json["bookId"],
-    cid: json["chapterId"],
-    title: json["title"],
-    status: statusFromString(json["status"] ?? "pending"),
-    progress: (json["progress"] ?? 0.0) + 0.0
-  );
+  factory ChapterCacheTask.fromJson(Map<String, dynamic> json) =>
+      ChapterCacheTask(
+        uuid: json["id"],
+        aid: json["bookId"],
+        cid: json["chapterId"],
+        title: json["title"],
+        status: statusFromString(json["status"] ?? "pending"),
+        progress: (json["progress"] ?? 0.0) + 0.0,
+      );
 }

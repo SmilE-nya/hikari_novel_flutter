@@ -14,16 +14,22 @@ class CatVolume {
   @JsonKey(includeFromJson: false, includeToJson: false)
   final RxBool isSelected;
 
-  CatVolume({required this.title, required this.chapters, bool initSelected = false}) : isSelected = initSelected.obs;
+  CatVolume({
+    required this.title,
+    required this.chapters,
+    bool initSelected = false,
+  }) : isSelected = initSelected.obs;
 
   static CatVolume get empty => CatVolume(title: "", chapters: []);
 
-  factory CatVolume.fromJson(Map<String, dynamic> json) => _$CatVolumeFromJson(json);
+  factory CatVolume.fromJson(Map<String, dynamic> json) =>
+      _$CatVolumeFromJson(json);
 
   Map<String, dynamic> toJson() => _$CatVolumeToJson(this);
 
   @override
   String toString() => jsonEncode(toJson());
 
-  factory CatVolume.fromString(String json) => CatVolume.fromJson(jsonDecode(json));
+  factory CatVolume.fromString(String json) =>
+      CatVolume.fromJson(jsonDecode(json));
 }

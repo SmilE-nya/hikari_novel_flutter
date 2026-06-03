@@ -15,7 +15,8 @@ extension Controller on GetInterface {
 }
 
 extension ScreenInfo on BuildContext {
-  bool isLargeScreen() => MediaQuery.of(this).size.width > MediaQuery.of(this).size.height;
+  bool isLargeScreen() =>
+      MediaQuery.of(this).size.width > MediaQuery.of(this).size.height;
 
   bool isTabletLikeScreen() => MediaQuery.of(this).size.shortestSide >= 600;
 
@@ -45,7 +46,9 @@ extension UrlEncodingIfNotAscii on String {
         buffer.write(String.fromCharCode(byte));
       } else {
         // 非ASCII字符转成 %XX 大写十六进制
-        buffer.write('%${byte.toRadixString(16).toUpperCase().padLeft(2, '0')}');
+        buffer.write(
+          '%${byte.toRadixString(16).toUpperCase().padLeft(2, '0')}',
+        );
       }
     }
     return buffer.toString();

@@ -55,11 +55,19 @@ class ReplyPage extends StatelessWidget {
               ),
             ),
           ),
-          Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: LoadingPage())),
+          Obx(
+            () => Offstage(
+              offstage: controller.pageState.value != PageState.loading,
+              child: LoadingPage(),
+            ),
+          ),
           Obx(
             () => Offstage(
               offstage: controller.pageState.value != PageState.error,
-              child: ErrorMessage(msg: controller.errorMsg, action: () async => controller.getPage(false)),
+              child: ErrorMessage(
+                msg: controller.errorMsg,
+                action: () async => controller.getPage(false),
+              ),
             ),
           ),
         ],
@@ -80,7 +88,10 @@ class ReplyPage extends StatelessWidget {
                       children: [
                         TextField(
                           controller: controller.replyContentController,
-                          decoration: InputDecoration(labelText: "reply_content".tr, border: OutlineInputBorder()),
+                          decoration: InputDecoration(
+                            labelText: "reply_content".tr,
+                            border: OutlineInputBorder(),
+                          ),
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
                         ),
@@ -90,7 +101,10 @@ class ReplyPage extends StatelessWidget {
                       TextButton(onPressed: Get.back, child: Text("cancel".tr)),
                       TextButton(
                         onPressed: () async {
-                          showSnackBar(message: await controller.sendReply(), context: Get.context!);
+                          showSnackBar(
+                            message: await controller.sendReply(),
+                            context: Get.context!,
+                          );
                           Get.back();
                         },
                         child: Text("reply".tr),

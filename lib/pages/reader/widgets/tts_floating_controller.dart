@@ -21,13 +21,17 @@ class _TtsFloatingControllerState extends State<TtsFloatingController> {
     final reader = Get.find<ReaderController>();
 
     return Obx(() {
-      final visible = tts.enabled.value && (tts.isPlaying.value || tts.isPaused.value);
+      final visible =
+          tts.enabled.value && (tts.isPlaying.value || tts.isPaused.value);
       if (!visible) return const SizedBox.shrink();
 
       final size = MediaQuery.of(context).size;
       final safeTop = MediaQuery.of(context).padding.top + 8;
       final safeBottom = MediaQuery.of(context).padding.bottom + 8;
-      final clamped = Offset(offset.dx.clamp(8, size.width - 8 - 240), offset.dy.clamp(safeTop, size.height - safeBottom - 56));
+      final clamped = Offset(
+        offset.dx.clamp(8, size.width - 8 - 240),
+        offset.dy.clamp(safeTop, size.height - safeBottom - 56),
+      );
       offset = clamped;
 
       return Positioned(
@@ -45,7 +49,12 @@ class _TtsFloatingControllerState extends State<TtsFloatingController> {
     });
   }
 
-  Widget _buildCard(BuildContext context, TtsService tts, ReaderController reader, {bool dragging = false}) {
+  Widget _buildCard(
+    BuildContext context,
+    TtsService tts,
+    ReaderController reader, {
+    bool dragging = false,
+  }) {
     final theme = Theme.of(context);
     final bg = theme.colorScheme.surface;
     final fg = theme.colorScheme.onSurface;
@@ -65,7 +74,11 @@ class _TtsFloatingControllerState extends State<TtsFloatingController> {
         ),
         child: Row(
           children: [
-            Icon(Icons.record_voice_over_outlined, color: fg.withOpacity(0.75), size: 20),
+            Icon(
+              Icons.record_voice_over_outlined,
+              color: fg.withOpacity(0.75),
+              size: 20,
+            ),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
@@ -91,10 +104,24 @@ class _TtsFloatingControllerState extends State<TtsFloatingController> {
                   }
                 }
               },
-              icon: Icon(tts.isPlaying.value ? Icons.pause_circle_outline : Icons.play_circle_outline),
+              icon: Icon(
+                tts.isPlaying.value
+                    ? Icons.pause_circle_outline
+                    : Icons.play_circle_outline,
+              ),
             ),
-            IconButton(tooltip: "stop".tr, iconSize: 22, onPressed: () => tts.stop(), icon: const Icon(Icons.stop_circle_outlined)),
-            IconButton(tooltip: "exit".tr, iconSize: 22, onPressed: () => tts.stop(), icon: const Icon(Icons.close)),
+            IconButton(
+              tooltip: "stop".tr,
+              iconSize: 22,
+              onPressed: () => tts.stop(),
+              icon: const Icon(Icons.stop_circle_outlined),
+            ),
+            IconButton(
+              tooltip: "exit".tr,
+              iconSize: 22,
+              onPressed: () => tts.stop(),
+              icon: const Icon(Icons.close),
+            ),
           ],
         ),
       ),

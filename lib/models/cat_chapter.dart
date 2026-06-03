@@ -13,14 +13,20 @@ class CatChapter {
   @JsonKey(includeFromJson: false, includeToJson: false)
   final RxBool isSelected;
 
-  CatChapter({required this.title, required this.cid, bool initSelected = false}) : isSelected = initSelected.obs;
+  CatChapter({
+    required this.title,
+    required this.cid,
+    bool initSelected = false,
+  }) : isSelected = initSelected.obs;
 
-  factory CatChapter.fromJson(Map<String, dynamic> json) => _$CatChapterFromJson(json);
+  factory CatChapter.fromJson(Map<String, dynamic> json) =>
+      _$CatChapterFromJson(json);
 
   Map<String, dynamic> toJson() => _$CatChapterToJson(this);
 
   @override
   String toString() => jsonEncode(toJson());
 
-  factory CatChapter.fromString(String json) => CatChapter.fromJson(jsonDecode(json));
+  factory CatChapter.fromString(String json) =>
+      CatChapter.fromJson(jsonDecode(json));
 }

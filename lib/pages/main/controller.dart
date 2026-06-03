@@ -19,16 +19,13 @@ class MainController extends GetxController {
   void onInit() {
     super.onInit();
 
-    pages = [
-      HomePage(),
-      BookshelfPage(),
-      MyPage()
-    ];
+    pages = [HomePage(), BookshelfPage(), MyPage()];
   }
 
   @override
   void onReady() {
     super.onReady();
-    if (LocalStorageService.instance.getIsAutoCheckUpdate()) Util.checkUpdate(false);
+    if (LocalStorageService.instance.getIsAutoCheckUpdate())
+      Util.checkUpdate(false);
   }
 }

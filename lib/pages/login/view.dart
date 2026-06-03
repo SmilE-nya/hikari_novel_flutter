@@ -25,14 +25,21 @@ class LoginPage extends StatelessWidget {
               ? [
                   IconButton(
                     onPressed: () async {
-                      if (await controller.inAppWebViewController?.canGoBack() == true) {
+                      if (await controller.inAppWebViewController
+                              ?.canGoBack() ==
+                          true) {
                         controller.inAppWebViewController?.goBack();
                       }
                     },
                     icon: Icon(Icons.arrow_upward),
                     tooltip: "back_to_previous_web_page".tr,
                   ),
-                  IconButton(onPressed: () => controller.inAppWebViewController?.reload(), icon: Icon(Icons.refresh), tooltip: "refresh_web_page".tr),
+                  IconButton(
+                    onPressed: () =>
+                        controller.inAppWebViewController?.reload(),
+                    icon: Icon(Icons.refresh),
+                    tooltip: "refresh_web_page".tr,
+                  ),
                 ]
               : [],
         ),
@@ -48,7 +55,10 @@ class LoginPage extends StatelessWidget {
                         curve: Curves.easeInOut,
                         duration: const Duration(milliseconds: 350),
                         height: controller.showLoading.value ? 4 : 0,
-                        child: LinearProgressIndicator(key: ValueKey(controller.loadingProgress), value: controller.loadingProgress / 100),
+                        child: LinearProgressIndicator(
+                          key: ValueKey(controller.loadingProgress),
+                          value: controller.loadingProgress / 100,
+                        ),
                       ),
                     ),
                     Expanded(
@@ -56,7 +66,9 @@ class LoginPage extends StatelessWidget {
                         child: InAppWebView(
                           key: controller.webViewKey,
                           webViewEnvironment: webViewEnvironment,
-                          initialUrlRequest: URLRequest(url: WebUri(controller.url)),
+                          initialUrlRequest: URLRequest(
+                            url: WebUri(controller.url),
+                          ),
                           initialSettings: controller.settings,
                           onWebViewCreated: (webController) {
                             controller.inAppWebViewController = webController;
@@ -100,7 +112,11 @@ class LoginPage extends StatelessWidget {
             Obx(
               () => Offstage(
                 offstage: controller.pageState.value != PageState.error,
-                child: ErrorMessage(msg: controller.errorMsg, action: () => Get.offAllNamed(RoutePath.welcome), buttonText: "re_login".tr),
+                child: ErrorMessage(
+                  msg: controller.errorMsg,
+                  action: () => Get.offAllNamed(RoutePath.welcome),
+                  buttonText: "re_login".tr,
+                ),
               ),
             ),
           ],

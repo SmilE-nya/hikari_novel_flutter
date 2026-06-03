@@ -11,7 +11,8 @@ import 'package:hikari_novel_flutter/pages/main/controller.dart';
 import '../../common/database/database.dart';
 import '../../service/db_service.dart';
 
-class BookshelfController extends GetxController with GetTickerProviderStateMixin {
+class BookshelfController extends GetxController
+    with GetTickerProviderStateMixin {
   RxInt tabIndex = 0.obs; //保存tab索引位置
 
   Rx<PageState> pageState = Rx(PageState.bookshelfContent);
@@ -23,7 +24,11 @@ class BookshelfController extends GetxController with GetTickerProviderStateMixi
 
   @override
   void onInit() {
-    tabController = TabController(length: tabs.length, vsync: this, initialIndex: tabIndex.value);
+    tabController = TabController(
+      length: tabs.length,
+      vsync: this,
+      initialIndex: tabIndex.value,
+    );
     super.onInit();
   }
 
@@ -51,7 +56,14 @@ class BookshelfController extends GetxController with GetTickerProviderStateMixi
           final bookshelf = Parser.getBookshelf(result.data, index);
           if (bookshelf.list.isNotEmpty) {
             final insertData = bookshelf.list.map((e) {
-              return BookshelfEntityData(aid: e.aid, bid: e.bid, url: e.url, title: e.title, img: e.img, classId: bookshelf.classId.toString());
+              return BookshelfEntityData(
+                aid: e.aid,
+                bid: e.bid,
+                url: e.url,
+                title: e.title,
+                img: e.img,
+                classId: bookshelf.classId.toString(),
+              );
             });
             await DBService.instance.insertAllBookshelf(insertData);
           }
@@ -84,7 +96,17 @@ class BookshelfContentController extends GetxController {
     super.onReady();
 
     DBService.instance.getBookshelfByClassId(classId).listen((bss) async {
-      List<BookshelfNovelInfo> list = bss.map((i) => BookshelfNovelInfo(bid: i.bid, aid: i.aid, url: i.url, title: i.title, img: i.img)).toList();
+      List<BookshelfNovelInfo> list = bss
+          .map(
+            (i) => BookshelfNovelInfo(
+              bid: i.bid,
+              aid: i.aid,
+              url: i.url,
+              title: i.title,
+              img: i.img,
+            ),
+          )
+          .toList();
 
       if (list.isEmpty) {
         bookshelf.value = null;
@@ -127,22 +149,36 @@ class BookshelfContentController extends GetxController {
       final detail = Parser.getNovelDetail(result.data);
       item.introduce.value = detail.introduce;
       // Cache to DB
-      DBService.instance.upsertNovelDetail(NovelDetailEntityData(aid: item.aid, json: detail.toString()));
+      DBService.instance.upsertNovelDetail(
+        NovelDetailEntityData(aid: item.aid, json: detail.toString()),
+      );
     }
   }
 
   void toggleCoverSelection(String aid) {
-    final selected = bookshelf.value!.list.firstWhere((v) => v.aid == aid).isSelected.value;
-    bookshelf.value!.list.firstWhere((v) => v.aid == aid).isSelected.value = !selected;
+    final selected = bookshelf.value!.list
+        .firstWhere((v) => v.aid == aid)
+        .isSelected
+        .value;
+    bookshelf.value!.list.firstWhere((v) => v.aid == aid).isSelected.value =
+        !selected;
   }
 
-  Future removeNovelFromList() => Api.removeNovelFromList(list: getSelectedNovel(), classId: int.parse(classId));
+  Future removeNovelFromList() => Api.removeNovelFromList(
+    list: getSelectedNovel(),
+    classId: int.parse(classId),
+  );
 
-  Future moveNovelToOther(int newClassId) =>
-    Api.moveNovelToOther(list: getSelectedNovel(), classId: int.parse(classId), newClassId: newClassId);
+  Future moveNovelToOther(int newClassId) => Api.moveNovelToOther(
+    list: getSelectedNovel(),
+    classId: int.parse(classId),
+    newClassId: newClassId,
+  );
 
-
-  List<String> getSelectedNovel() => bookshelf.value!.list.where((v) => v.isSelected.value == true).map((i) => i.bid).toList();
+  List<String> getSelectedNovel() => bookshelf.value!.list
+      .where((v) => v.isSelected.value == true)
+      .map((i) => i.bid)
+      .toList();
 
   void exitSelectionMode() {
     _bookshelfController.isSelectionMode.value = false;
@@ -170,7 +206,9 @@ class BookshelfContentController extends GetxController {
 
 class BookshelfSearchController extends GetxController {
   final _bookshelfController = Get.find<BookshelfController>();
-  final searchTextEditController = Get.find<TextEditingController>(tag: "searchTextEditController");
+  final searchTextEditController = Get.find<TextEditingController>(
+    tag: "searchTextEditController",
+  );
 
   RxList<BookshelfNovelInfo> data = RxList();
   Rx<PageState> pageState = Rx(PageState.placeholder);
@@ -179,7 +217,15 @@ class BookshelfSearchController extends GetxController {
     data.assignAll(
       (await DBService.instance.getBookshelfByKeyword(
         searchTextEditController.text,
-      )).map((e) => BookshelfNovelInfo(bid: e.bid, aid: e.aid, url: e.url, title: e.title, img: e.img)),
+      )).map(
+        (e) => BookshelfNovelInfo(
+          bid: e.bid,
+          aid: e.aid,
+          url: e.url,
+          title: e.title,
+          img: e.img,
+        ),
+      ),
     );
     if (data.isEmpty) {
       pageState.value = PageState.empty;
@@ -188,5 +234,6 @@ class BookshelfSearchController extends GetxController {
     }
   }
 
-  void back() => _bookshelfController.pageState.value = PageState.bookshelfContent;
+  void back() =>
+      _bookshelfController.pageState.value = PageState.bookshelfContent;
 }

@@ -19,9 +19,18 @@ class ReaderBackground extends StatelessWidget {
 
       final bgImage = controller.currentBgImagePath.value;
       if (bgImage != null && bgImage.isNotEmpty) {
-        decoration = BoxDecoration(image: DecorationImage(image: FileImage(File(bgImage)), fit: BoxFit.cover));
+        decoration = BoxDecoration(
+          image: DecorationImage(
+            image: FileImage(File(bgImage)),
+            fit: BoxFit.cover,
+          ),
+        );
       } else {
-        decoration = BoxDecoration(color: controller.currentBgColor.value ?? Theme.of(context).colorScheme.surface);
+        decoration = BoxDecoration(
+          color:
+              controller.currentBgColor.value ??
+              Theme.of(context).colorScheme.surface,
+        );
       }
 
       return Container(decoration: decoration, child: child);

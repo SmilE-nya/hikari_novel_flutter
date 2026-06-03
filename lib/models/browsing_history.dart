@@ -4,5 +4,10 @@ class BrowsingHistory {
   final String img;
   final DateTime time;
 
-  BrowsingHistory({required this.aid, required this.title, required this.img, required this.time});
+  BrowsingHistory({
+    required this.aid,
+    required this.title,
+    required this.img,
+    required this.time,
+  });
 }

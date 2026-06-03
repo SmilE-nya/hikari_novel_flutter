@@ -33,7 +33,9 @@ class SearchController extends GetxController {
   void onReady() {
     super.onReady();
 
-    DBService.instance.getAllSearchHistory().listen((sh) => searchHistory.assignAll(sh.reversed.map((e) => e.keyword)));
+    DBService.instance.getAllSearchHistory().listen(
+      (sh) => searchHistory.assignAll(sh.reversed.map((e) => e.keyword)),
+    );
 
     checkIsAuthorSearch(author);
   }
@@ -48,7 +50,9 @@ class SearchController extends GetxController {
 
   void searchFromHistory(String keyword) {
     keywordController.text = keyword;
-    keywordController.selection = TextSelection.fromPosition(TextPosition(offset: keywordController.text.length));
+    keywordController.selection = TextSelection.fromPosition(
+      TextPosition(offset: keywordController.text.length),
+    );
     getPage(false);
     Get.focusScope?.unfocus();
   }
@@ -57,7 +61,9 @@ class SearchController extends GetxController {
     if (!loadMore) pageState.value = PageState.loading;
 
     if (!loadMore) {
-      DBService.instance.upsertSearchHistory(SearchHistoryEntityData(keyword: keywordController.text));
+      DBService.instance.upsertSearchHistory(
+        SearchHistoryEntityData(keyword: keywordController.text),
+      );
 
       data.clear();
       _index = 0;
@@ -69,9 +75,15 @@ class SearchController extends GetxController {
 
     Resource result;
     if (searchMode.value == 0) {
-      result = await Api.searchNovelByTitle(title: keywordController.text, index: _index);
+      result = await Api.searchNovelByTitle(
+        title: keywordController.text,
+        index: _index,
+      );
     } else {
-      result = await Api.searchNovelByAuthor(author: keywordController.text, index: _index);
+      result = await Api.searchNovelByAuthor(
+        author: keywordController.text,
+        index: _index,
+      );
     }
 
     switch (result) {
@@ -86,7 +98,9 @@ class SearchController extends GetxController {
                 AlertDialog(
                   title: Text("warning".tr),
                   content: Text("search_too_quickly_tip".tr),
-                  actions: [TextButton(onPressed: Get.back, child: Text("confirm".tr))],
+                  actions: [
+                    TextButton(onPressed: Get.back, child: Text("confirm".tr)),
+                  ],
                 ),
               );
             }
@@ -100,7 +114,9 @@ class SearchController extends GetxController {
             _maxNum = (onlyOne != null) ? 1 : Parser.getMaxNum(html);
           }
 
-          final parsedHtml = (onlyOne != null) ? <NovelCover>[onlyOne] : Parser.parseToList(html);
+          final parsedHtml = (onlyOne != null)
+              ? <NovelCover>[onlyOne]
+              : Parser.parseToList(html);
 
           if (parsedHtml.isEmpty) {
             pageState.value = PageState.empty;
@@ -109,7 +125,9 @@ class SearchController extends GetxController {
 
           data.addAll(parsedHtml);
           if (!loadMore) pageState.value = PageState.success;
-          return (onlyOne != null) ? IndicatorResult.noMore : IndicatorResult.success;
+          return (onlyOne != null)
+              ? IndicatorResult.noMore
+              : IndicatorResult.success;
         }
       case Error():
         {
@@ -117,7 +135,9 @@ class SearchController extends GetxController {
             errorMsg = result.error;
             pageState.value = PageState.error;
           } else {
-            showErrorDialog(result.error.toString(), [TextButton(onPressed: Get.back, child: Text("confirm".tr))]);
+            showErrorDialog(result.error.toString(), [
+              TextButton(onPressed: Get.back, child: Text("confirm".tr)),
+            ]);
           }
           if (_index > 0) {
             _index -= 1;

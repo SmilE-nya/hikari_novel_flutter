@@ -25,9 +25,18 @@ class RankingView extends StatelessWidget {
             children: [
               SizedBox(width: 14),
               ActionChip(
-                label: Row(children: [Obx(() => Text(controller.ranking.value)), Icon(Icons.arrow_drop_down_outlined)]),
+                label: Row(
+                  children: [
+                    Obx(() => Text(controller.ranking.value)),
+                    Icon(Icons.arrow_drop_down_outlined),
+                  ],
+                ),
                 onPressed: () {
-                  showMenu(context: context, position: RelativeRect.fill, items: _getRankingList());
+                  showMenu(
+                    context: context,
+                    position: RelativeRect.fill,
+                    items: _getRankingList(),
+                  );
                 },
                 padding: EdgeInsets.zero,
               ),
@@ -50,22 +59,37 @@ class RankingView extends StatelessWidget {
                           minItemWidth: 100,
                           horizontalGridSpacing: 4,
                           verticalGridSpacing: 4,
-                          maxItemsPerRow: Get.find<SettingController>().gridColumnCount.value,
-                          children:
-                              controller.data.map((item) {
-                                return NovelCoverCard(novelCover: item);
-                              }).toList(),
+                          maxItemsPerRow: Get.find<SettingController>()
+                              .gridColumnCount
+                              .value,
+                          children: controller.data.map((item) {
+                            return NovelCoverCard(novelCover: item);
+                          }).toList(),
                         ),
                       ),
                     ),
                   ),
                 ),
-                Obx(() => Offstage(offstage: controller.pageState.value != PageState.pleaseSelect, child: PleaseSelectPage())),
-                Obx(() => Offstage(offstage: controller.pageState.value != PageState.loading, child: LoadingPage())),
+                Obx(
+                  () => Offstage(
+                    offstage:
+                        controller.pageState.value != PageState.pleaseSelect,
+                    child: PleaseSelectPage(),
+                  ),
+                ),
+                Obx(
+                  () => Offstage(
+                    offstage: controller.pageState.value != PageState.loading,
+                    child: LoadingPage(),
+                  ),
+                ),
                 Obx(
                   () => Offstage(
                     offstage: controller.pageState.value != PageState.error,
-                    child: ErrorMessage(msg: controller.errorMsg, action: () => controller.getPage(false)),
+                    child: ErrorMessage(
+                      msg: controller.errorMsg,
+                      action: () => controller.getPage(false),
+                    ),
                   ),
                 ),
               ],

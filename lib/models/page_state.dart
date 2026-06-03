@@ -8,5 +8,5 @@ enum PageState {
   inFiveSecond,
   bookshelfContent,
   bookshelfSearch,
-  placeholder
+  placeholder,
 }

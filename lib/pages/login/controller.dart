@@ -21,7 +21,9 @@ import '../../service/local_storage_service.dart';
 class LoginController extends GetxController {
   RxBool showLoading = true.obs;
   RxInt loadingProgress = 0.obs;
-  final CookieManager cookieManager = CookieManager.instance(webViewEnvironment: webViewEnvironment);
+  final CookieManager cookieManager = CookieManager.instance(
+    webViewEnvironment: webViewEnvironment,
+  );
   InAppWebViewController? inAppWebViewController;
   final GlobalKey webViewKey = GlobalKey();
   final InAppWebViewSettings settings = InAppWebViewSettings(
@@ -50,11 +52,14 @@ class LoginController extends GetxController {
       final getCookie = await cookieManager.getCookies(url: uri);
 
       bool hasCookie = ["jieqiUserInfo", "jieqiVisitInfo"].every(
-        (keyword) => getCookie.any((cookieItem) => cookieItem.name.contains(keyword)),
+        (keyword) =>
+            getCookie.any((cookieItem) => cookieItem.name.contains(keyword)),
       ); //getCookie.any((cookieItem) => cookieItem.name == "jieqiUserInfo");
       if (hasCookie) {
-        String cookie = "jieqiUserInfo=${getCookie.firstWhere((cookieItem) => cookieItem.name == "jieqiUserInfo").value};";
-        cookie += "jieqiVisitInfo=${getCookie.firstWhere((cookieItem) => cookieItem.name == "jieqiVisitInfo").value}";
+        String cookie =
+            "jieqiUserInfo=${getCookie.firstWhere((cookieItem) => cookieItem.name == "jieqiUserInfo").value};";
+        cookie +=
+            "jieqiVisitInfo=${getCookie.firstWhere((cookieItem) => cookieItem.name == "jieqiVisitInfo").value}";
         LocalStorageService.instance.setCookie(cookie);
         Request.initCookie();
 
@@ -107,7 +112,14 @@ class LoginController extends GetxController {
           final bookshelf = Parser.getBookshelf(result.data, index);
           if (bookshelf.list.isNotEmpty) {
             final insertData = bookshelf.list.map((e) {
-              return BookshelfEntityData(aid: e.aid, bid: e.bid, url: e.url, title: e.title, img: e.img, classId: bookshelf.classId.toString());
+              return BookshelfEntityData(
+                aid: e.aid,
+                bid: e.bid,
+                url: e.url,
+                title: e.title,
+                img: e.img,
+                classId: bookshelf.classId.toString(),
+              );
             });
             await DBService.instance.insertAllBookshelf(insertData);
           }
