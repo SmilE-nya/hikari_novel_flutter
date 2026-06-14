@@ -196,8 +196,9 @@ class SettingPage extends StatelessWidget {
                       title: "browsing_history_layout".tr,
                     ),
                   ).then((value) {
-                    if (value != null)
+                    if (value != null) {
                       controller.changeBrowsingHistoryLayout(value);
+                    }
                   }),
             );
           }),
@@ -217,8 +218,9 @@ class SettingPage extends StatelessWidget {
                       title: "user_bookshelf_layout".tr,
                     ),
                   ).then((value) {
-                    if (value != null)
+                    if (value != null) {
                       controller.changeUserBookshelfLayout(value);
+                    }
                   }),
             );
           }),

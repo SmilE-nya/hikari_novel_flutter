@@ -402,9 +402,9 @@ class _PaperCurlPagerState extends State<PaperCurlPager>
                     _paper,
                     backside,
                     fromTop: _fromTop,
-                    gutterColor: Theme.of(context).colorScheme.shadow
-                        .withOpacity(
-                          Theme.of(context).brightness == Brightness.dark
+                        gutterColor: Theme.of(context).colorScheme.shadow
+                        .withValues(
+                          alpha: Theme.of(context).brightness == Brightness.dark
                               ? 0.42
                               : 0.18,
                         ),
@@ -668,7 +668,7 @@ class _BookPainter extends CustomPainter {
 }
 
 class _PaperPoint {
-  _PaperPoint(this.a, this.size, {this.elevationC = 10}) {
+  _PaperPoint(this.a, this.size) : elevationC = 10 {
     f = math.Point(size.width, size.height);
     if ((a.x - f.x).abs() < 0.001 && (a.y - f.y).abs() < 0.001) {
       g = f;

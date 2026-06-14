@@ -474,8 +474,9 @@ class _NovelDetailPageState extends State<NovelDetailPage> {
 
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, volumeIndex) {
-        if (controller.isChapterOrderReversed.value)
+        if (controller.isChapterOrderReversed.value) {
           volumeIndex = detail.catalogue.length - volumeIndex - 1;
+        }
         final volume = detail.catalogue[volumeIndex];
         final volumeCids = volume.chapters
             .map((catChapter) => catChapter.cid)
@@ -660,8 +661,9 @@ class _NovelDetailPageState extends State<NovelDetailPage> {
                             );
                           },
                           onLongPress: () {
-                            if (!controller.isSelectionMode.value)
+                            if (!controller.isSelectionMode.value) {
                               controller.enterSelectionMode();
+                            }
                             controller.toggleChapterSelection(
                               volumeIndex,
                               chapterIndex,

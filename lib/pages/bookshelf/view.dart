@@ -131,11 +131,12 @@ class BookshelfPage extends StatelessWidget {
   }
 
   Widget? _buildBottomBar(BuildContext context) {
-    if (controller.isSelectionMode.value && context.isLargeScreen())
+    if (controller.isSelectionMode.value && context.isLargeScreen()) {
       return CommonWidgets.bookshelfBottomActionBar(
         currentTabController,
         controller,
       );
+    }
     return null;
   }
 }

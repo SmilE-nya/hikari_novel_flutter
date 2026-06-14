@@ -20,7 +20,6 @@
 
 </div>
 
-
 ## ✨ 功能
 - Material Design 3风格
 - 支持深浅模式切换
@@ -105,3 +104,6 @@
 
 ## ⭐ 星标数趋势
 [![星标数趋势](https://starchart.cc/15dd/hikari_novel_flutter.svg?variant=adaptive)](https://starchart.cc/15dd/hikari_novel_flutter)
+
+## 项目石墩子
+![Stone Badge](https://stone.professorlee.work/api/stone/SmilE-nya/hikari_novel_flutter)
