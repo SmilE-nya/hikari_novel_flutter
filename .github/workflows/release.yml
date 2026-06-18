@@ -104,7 +104,7 @@ jobs:
         run: flutter build appbundle --release
 
       - name: Upload APK artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-apks
           path: |
@@ -120,10 +120,10 @@ jobs:
 
     steps:
       - name: Download Android build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: android-apks
-          path: artifacts/android
+          path: artifacts
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
@@ -140,7 +140,8 @@ jobs:
             - `app-release.apk` — 通用 APK（所有架构）
             - `app-release.aab` — Android App Bundle
           files: |
-            artifacts/android/*
+            artifacts/**/*.apk
+            artifacts/**/*.aab
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
