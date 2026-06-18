@@ -68,6 +68,9 @@ class ReaderController extends GetxController {
   RxInt currentIndex = 0.obs;
   int initialHorizontalIndex = 0;
 
+  /// 阅读记录保存触发器（合并 currentLocation / currentIndex 变化到单一 debounce）
+  final Rx<int> _readHistoryTrigger = 0.obs;
+
   RxInt horizontalProgress = 0.obs;
 
   ///最大页面
@@ -117,19 +120,14 @@ class ReaderController extends GetxController {
 
     getInitLocation(); //事先赋值一下对应的变量，防止在build过程中修改obx变量
 
-    //延迟更新阅读记录
-    //debounce / ever / interval 只能在 Controller 生命周期里创建一次
-    //TODO 还需要优化
+    //延迟更新阅读记录 — 合并 location/index 变化到单一 debounce，避免重复写入
     debounce(
-      currentLocation,
+      _readHistoryTrigger,
       (_) => setReadHistory(),
       time: const Duration(milliseconds: 150),
     );
-    debounce(
-      currentIndex,
-      (_) => setReadHistory(),
-      time: const Duration(milliseconds: 150),
-    );
+    ever(currentLocation, (_) => _readHistoryTrigger.value++);
+    ever(currentIndex, (_) => _readHistoryTrigger.value++);
   }
 
   @override

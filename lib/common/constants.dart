@@ -32,3 +32,6 @@ final TextStyle kCommentAndReplyUsernameTextStyle = TextStyle(
 const int kScrollReadMode = 1;
 
 const int kPageReadMode = 2;
+
+/// 单次缓存最大章节数（超出时弹窗确认）
+const int kMaxCacheChapterLimit = 100;

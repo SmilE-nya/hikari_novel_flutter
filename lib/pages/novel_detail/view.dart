@@ -738,7 +738,28 @@ class _NovelDetailPageState extends State<NovelDetailPage> {
               Expanded(
                 child: TextButton.icon(
                   onPressed: () async {
-                    //TODO 下载数量限制
+                    final count = controller.getSelectedCount();
+                    if (count > kMaxCacheChapterLimit) {
+                      final confirm = await Get.dialog<bool>(
+                        AlertDialog(
+                          title: Text("warning".tr),
+                          content: Text(
+                            "本次缓存共 $count 章，超过上限 $kMaxCacheChapterLimit 章，确定要继续吗？",
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Get.back(result: false),
+                              child: Text("cancel".tr),
+                            ),
+                            TextButton(
+                              onPressed: () => Get.back(result: true),
+                              child: Text("confirm".tr),
+                            ),
+                          ],
+                        ),
+                      );
+                      if (confirm != true) return;
+                    }
                     await controller.startCache();
                     controller.exitSelectionMode();
                     AppSubRouter.toCacheQueue();

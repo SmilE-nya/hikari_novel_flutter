@@ -21,6 +21,17 @@ import '../models/user_info.dart';
 
 ///此部分的代码基本都是沿用之前的逻辑，然后用AI转化了下
 class Parser {
+  /// 根据 aid 构建较清晰的封面 URL（与书架解析同一模式）
+  /// 不同于列表页 HTML 里的小缩略图，此 URL 指向完整封面图
+  static String _coverUrlFromAid(String aid) {
+    if (aid.isEmpty) return '';
+    if (aid.length <= 3) {
+      return 'https://pic.wenku8.com/image/0/$aid/$aid.jpg';
+    } else {
+      return 'https://pic.wenku8.com/image/${aid[0]}/$aid/$aid.jpg';
+    }
+  }
+
   static List<NovelCover> parseToList(String htmlContent) {
     final node = Api.wenku8Node.node.replaceAll("https://", "");
     final List<NovelCover> result = [];
@@ -38,10 +49,6 @@ class Parser {
 
     for (final Element novelItem in bookItems) {
       try {
-        final Element? imgElement = novelItem.querySelector("img");
-        String img = imgElement?.attributes['src'] ?? '';
-        img = ImageUrlHelper.normalize(img);
-
         final Element? titleLinkElement = novelItem.querySelector("a");
         final String title = titleLinkElement?.attributes['title'] ?? "";
 
@@ -52,12 +59,6 @@ class Parser {
 
         if (detailUrl.isEmpty) {
           continue;
-        }
-
-        if (img == "/images/noimg.jpg") {
-          img = "https://$node/modules/article/images/nocover.jpg";
-        } else if (img.isEmpty) {
-          img = "https://$node/modules/article/images/nocover.jpg";
         }
 
         String aid = "";
@@ -71,6 +72,19 @@ class Parser {
           final bidIndex = detailUrl.indexOf("&bid=");
           if (aidIndex != -1 && bidIndex != -1 && bidIndex > aidIndex + 4) {
             aid = detailUrl.substring(aidIndex + 4, bidIndex);
+          }
+        }
+
+        // 使用 aid 构建清晰封面图 URL，而非 HTML 里的小缩略图
+        String img = _coverUrlFromAid(aid);
+        if (img.isEmpty) {
+          // fallback: 从 HTML 提取缩略图
+          final Element? imgElement = novelItem.querySelector("img");
+          img = ImageUrlHelper.normalize(
+            imgElement?.attributes['src'] ?? '',
+          );
+          if (img == "/images/noimg.jpg" || img.isEmpty) {
+            img = "https://$node/modules/article/images/nocover.jpg";
           }
         }
 
@@ -98,7 +112,8 @@ class Parser {
           final String title = anchorElements[0].text.trim();
           final String href = anchorElements[1].attributes['href'] ?? '';
           final String aid = Uri.parse(href).queryParameters['bid'] ?? '';
-          list.add(NovelCover(title, null, aid));
+          // 使用 aid 构建封面 URL，替代之前的 null（NovelCoverCard 在 grid 模式会 crash）
+          list.add(NovelCover(title, _coverUrlFromAid(aid), aid));
         }
       }
     }
@@ -201,14 +216,18 @@ class Parser {
       );
       for (var j in tempBlock1Content) {
         String title = j.getElementsByTagName("a")[1].text;
-        String img = j.getElementsByTagName("img")[0].attributes["src"] ?? "";
-        if (!img.startsWith("https")) {
-          img = img.replaceFirst("http", "https");
-        }
         String url = j.getElementsByTagName("a")[0].attributes["href"] ?? "";
         String aid = url.contains("book/")
             ? url.substring(url.indexOf("book/") + 5, url.indexOf(".htm"))
             : "";
+        // 使用 aid 构建清晰封面图，而非 HTML 里 95x155 的小缩略图
+        String img = _coverUrlFromAid(aid);
+        if (img.isEmpty) {
+          img = j.getElementsByTagName("img")[0].attributes["src"] ?? "";
+          if (!img.startsWith("https")) {
+            img = img.replaceFirst("http", "https");
+          }
+        }
         blockList.add(NovelCover(title, img, aid));
       }
       recommendBlockList.add(RecommendBlock(blockTitle, blockList));
@@ -227,15 +246,19 @@ class Parser {
       for (var j in tempBlock1Content) {
         try {
           String title = j.getElementsByTagName("a")[1].text;
-          String img = j.getElementsByTagName("img")[0].attributes["src"] ?? "";
-          if (!regex.hasMatch(img)) img = "";
-          if (!img.startsWith("https")) {
-            img = img.replaceFirst("http", "https");
-          }
           String url = j.getElementsByTagName("a")[0].attributes["href"] ?? "";
           String aid = url.contains("book/")
               ? url.substring(url.indexOf("book/") + 5, url.indexOf(".htm"))
               : "";
+          // 使用 aid 构建清晰封面图
+          String img = _coverUrlFromAid(aid);
+          if (img.isEmpty) {
+            img = j.getElementsByTagName("img")[0].attributes["src"] ?? "";
+            if (!regex.hasMatch(img)) img = "";
+            if (!img.startsWith("https")) {
+              img = img.replaceFirst("http", "https");
+            }
+          }
           blockList.add(NovelCover(title, img, aid));
         } catch (e) {
           continue;
@@ -462,9 +485,9 @@ class Parser {
 
       String imgUrl;
       if (aid.length <= 3) {
-        imgUrl = 'https://img.wenku8.com/image/0/$aid/$aid.jpg';
+        imgUrl = 'https://pic.wenku8.com/image/0/$aid/$aid.jpg';
       } else {
-        imgUrl = 'https://img.wenku8.com/image/${aid[0]}/$aid/$aid.jpg';
+        imgUrl = 'https://pic.wenku8.com/image/${aid[0]}/$aid/$aid.jpg';
       }
 
       novels.add(
