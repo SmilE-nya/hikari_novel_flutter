@@ -111,43 +111,9 @@ jobs:
             build/app/outputs/flutter-apk/*.apk
             build/app/outputs/bundle/release/*.aab
 
-  build-windows:
-    name: Build Windows
-    needs: setup
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.38.7'
-          channel: 'stable'
-          cache: true
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build Windows
-        run: flutter build windows --release
-
-      - name: Zip artifact
-        shell: pwsh
-        run: |
-          $tag = "${{ needs.setup.outputs.tag }}"
-          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath "hikari-novel-windows-x64-$tag.zip"
-
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build
-          path: hikari-novel-windows-x64-*.zip
-
   release:
     name: Create Release
-    needs: [setup, build-android, build-windows]
+    needs: [setup, build-android]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -158,12 +124,6 @@ jobs:
         with:
           name: android-apks
           path: artifacts/android
-
-      - name: Download Windows build
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-build
-          path: artifacts/windows
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
@@ -179,12 +139,8 @@ jobs:
             - `app-x86_64-release.apk` — x86_64 模拟器 / 设备
             - `app-release.apk` — 通用 APK（所有架构）
             - `app-release.aab` — Android App Bundle
-
-            ### Windows
-            - `hikari-novel-windows-x64-${{ needs.setup.outputs.tag }}.zip` — 便携式 Windows 构建
           files: |
             artifacts/android/*
-            artifacts/windows/*
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
