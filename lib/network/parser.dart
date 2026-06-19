@@ -485,10 +485,11 @@ class Parser {
 
       String imgUrl;
       if (aid.length <= 3) {
-        imgUrl = 'https://pic.wenku8.com/image/0/$aid/$aid.jpg';
+        imgUrl = 'https://pic.wenku8.com/image/0/$aid/${aid}s.jpg';
       } else {
-        imgUrl = 'https://pic.wenku8.com/image/${aid[0]}/$aid/$aid.jpg';
+        imgUrl = 'https://pic.wenku8.com/image/${aid[0]}/$aid/${aid}s.jpg';
       }
+      imgUrl = ImageUrlHelper.normalize(imgUrl);
 
       novels.add(
         BookshelfNovelInfo(
