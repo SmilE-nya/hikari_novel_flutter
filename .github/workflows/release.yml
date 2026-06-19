@@ -133,7 +133,30 @@ jobs:
           body: |
             ## Hikari Novel ${{ needs.setup.outputs.tag }}
 
-            ### Android
+            ### 🚀 新功能
+            - 缓存的小说可导出为 .txt / .epub，支持自定义导出目录
+            - 封面图片从第一章插画延迟加载高清图
+            - 网格列数自定义（1-6列）
+            - 列表/网格布局切换
+            - 书架列表模式显示章节简介
+            - Material Design 3 风格，适配平板布局
+            - 深浅色模式切换
+            - 阅读进度保存
+            - 支持评论查看与回复
+
+            ### 🐛 修复
+            - 书架/首页封面不显示或模糊
+            - 封面图片使用不存在的全尺寸图 → 改用缩略图（s 后缀）
+            - Reader 控制器 debounce 优化，减少滚动卡顿
+            - 缓存数量限制弹窗
+            - CI: Node 20 弃用警告 → upload-artifact@v6, download-artifact@v7（Node 24）
+
+            ### ⚙️ CI/CD
+            - 新增 GitHub Actions 自动构建 + Release 工作流
+            - 移除 Windows 构建（仅 Android 发布）
+            - Docker 镜像构建（Android SDK + Flutter 3.38.7）
+
+            ### 📦 下载
             - `app-armeabi-v7a-release.apk` — 32-bit ARM 设备
             - `app-arm64-v8a-release.apk` — 64-bit ARM 设备（推荐）
             - `app-x86_64-release.apk` — x86_64 模拟器 / 设备
