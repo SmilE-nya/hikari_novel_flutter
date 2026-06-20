@@ -40,6 +40,9 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
+# Development artifacts
+new_icon.png
+
 # Android
 /android/.gradle/
 /android/.kotlin/

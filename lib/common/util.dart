@@ -44,9 +44,15 @@ class Util {
       final info = await PackageInfo.fromPlatform();
       final localVer = info.version; // e.g. "1.2.0-beta.2"
 
+      // 标准化版本号：去 v 前缀、去 build number（+后面的部分）
+      // 因为 PackageInfo.version 在 Android 上不含 build number
+      String normalize(String v) {
+        var s = v.startsWith("v") ? v.substring(1) : v;
+        final idx = s.indexOf("+");
+        return idx > 0 ? s.substring(0, idx) : s;
+      }
       bool hasNewVersion =
-          localVer.toString() !=
-          remoteVer.toString().substring(0, remoteVer.toString().indexOf("+"));
+          normalize(localVer) != normalize(remoteVer as String);
 
       //不需要通知且没有新版本，直接返回
       if (!mustNotification && !hasNewVersion) return;

@@ -83,9 +83,8 @@ dependencies:
   # 电量显示
   battery_plus: ^7.0.0
 
-  # 文件选择器
-  # TODO 暂时不要使用10.3.9版本，后面再考虑是否要升级
-  file_picker: 10.3.8
+  # 文件选择器（锁定 10.3.x，11.x 改用静态 API 需要单独重构）
+  file_picker: 10.3.10
 
   # ttf源文件解析
   ttf_metadata: ^0.0.6

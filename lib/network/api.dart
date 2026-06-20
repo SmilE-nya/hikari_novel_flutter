@@ -35,7 +35,7 @@ class Api {
       LocalStorageService.instance.getWenku8Node();
 
   static String latestUrl =
-      "https://api.github.com/repos/15dd/hikari_novel_flutter/releases/latest";
+      "https://api.github.com/repos/SmilE-nya/hikari_novel_flutter/releases/latest";
 
   /// 根据排名获取小说列表
   /// - [ranking] 排行榜种类

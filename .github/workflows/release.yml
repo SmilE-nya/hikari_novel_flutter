@@ -91,6 +91,17 @@ jobs:
             echo "storeFile=../app/debug_ci.jks"
           } > android/key.properties
 
+      - name: Sync pubspec version with git tag
+        shell: bash
+        run: |
+          TAG="${{ needs.setup.outputs.tag }}"
+          VERSION="${TAG#v}"
+          if [[ "$VERSION" != *"+"* ]]; then
+            VERSION="${VERSION}+0"
+          fi
+          sed -i "s/^version:.*/version: $VERSION/" pubspec.yaml
+          echo "pubspec version → $VERSION"
+
       - name: Install dependencies
         run: flutter pub get
 

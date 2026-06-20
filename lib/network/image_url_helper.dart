@@ -20,7 +20,7 @@ class ImageUrlHelper {
     // /xxx 这种路径相对链接（通常挂在站点根目录）
     if (s.startsWith('/')) {
       // 图片通常在 pic 域名下，这里用官方域名兜底
-      s = 'https://pic.wenku8.com$s';
+      s = 'https://img.wenku8.com$s';
     }
 
     // 尝试解析
@@ -54,8 +54,8 @@ class ImageUrlHelper {
     final host = uri.host.toLowerCase();
 
     if (host == 'pic.777743.xyz') {
-      // 备用：替换为wenku8官方图片域名（同路径）
-      return uri.replace(host: 'pic.wenku8.com').toString();
+      // 备用：替换为 wenku8 图片域名（同路径，原 pic.wenku8.com 已失效）
+      return uri.replace(host: 'img.wenku8.com').toString();
     }
 
     return normalized;

@@ -6,7 +6,7 @@
 <div align="center">
 
   <div align="center">
-    <img src="./assets/images/logo_transparent.png" alt="Logo" height="250">
+    <img src="./readme/ic_launcher-playstore.png" alt="Logo" height="250">
   </div>
 
 # Hikari Novel
@@ -14,7 +14,7 @@
   <p align="center"><font>使用Flutter构建的第三方轻小说文库客户端</font></p>
 
   <div>
-    <img alt="GitHub Release" src="https://img.shields.io/github/v/release/15dd/hikari_novel_flutter?style=for-the-badge&color=%23408A23">
+    <img alt="GitHub Release" src="https://img.shields.io/github/v/release/SmilE-nya/hikari_novel_flutter?style=for-the-badge&color=%23408A23">
     <img alt="License" src="https://img.shields.io/badge/License-MIT-Green?style=for-the-badge&color=rgb(164%2C25%2C49)">
   </div>
 
@@ -60,11 +60,6 @@
 - `main` 主分支。发布版本用
 - `develop` 开发分支。想要提pr的人请拉取这个分支进行开发，然后提pr时也请merge到这个分支
 
-
-## 📦 安装
-- 本项目不提供安装包，请参考下方 `编译` 自行编译使用
-
-
 ## 💻 编译
 - ##### 我的开发环境
   ```
@@ -89,7 +84,7 @@
 - 本项目是个人为了兴趣以及学习移动端开发而开发的，仅用于学习和测试
 - 本项目所用API均从轻小说文库官方网站收集，不提供任何破解内容
 - 本项目是个人项目，与轻小说文库官方无关，请注意辨别
-
+- 本项目仅考虑开发者自己的使用
 
 ## 📖 参考
 - [flutter_dmzj](https://github.com/xiaoyaocz/flutter_dmzj)
@@ -103,7 +98,7 @@
 
 
 ## ⭐ 星标数趋势
-[![星标数趋势](https://starchart.cc/15dd/hikari_novel_flutter.svg?variant=adaptive)](https://starchart.cc/15dd/hikari_novel_flutter)
+[![星标数趋势](https://starchart.cc/SmilE-nya/hikari_novel_flutter.svg?variant=adaptive)](https://starchart.cc/SmilE-nya/hikari_novel_flutter)
 
 ## 项目石墩子
 ![Stone Badge](https://stone.professorlee.work/api/stone/SmilE-nya/hikari_novel_flutter)

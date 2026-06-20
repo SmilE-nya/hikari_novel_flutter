@@ -65,7 +65,7 @@ class AboutPage extends StatelessWidget {
             leading: const Icon(Icons.code),
             trailing: const Icon(Icons.open_in_new),
             onTap: () => launchUrl(
-              Uri.parse("https://github.com/15dd/hikari_novel_flutter"),
+              Uri.parse("https://github.com/SmilE-nya/hikari_novel_flutter"),
             ),
           ),
           NormalTile(

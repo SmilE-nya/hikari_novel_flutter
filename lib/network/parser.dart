@@ -21,15 +21,18 @@ import '../models/user_info.dart';
 
 ///此部分的代码基本都是沿用之前的逻辑，然后用AI转化了下
 class Parser {
-  /// 根据 aid 构建较清晰的封面 URL（与书架解析同一模式）
-  /// 不同于列表页 HTML 里的小缩略图，此 URL 指向完整封面图
+  /// 根据 aid 构建封面缩略图 URL（与书架解析同一模式）
+  /// wenku8 的全尺寸原图已不存在，必须使用缩略图（`s` 后缀）
+  /// 注意：pic.wenku8.com 已失效，必须使用 img.wenku8.com
   static String _coverUrlFromAid(String aid) {
     if (aid.isEmpty) return '';
+    final String url;
     if (aid.length <= 3) {
-      return 'https://pic.wenku8.com/image/0/$aid/$aid.jpg';
+      url = 'https://img.wenku8.com/image/0/$aid/${aid}s.jpg';
     } else {
-      return 'https://pic.wenku8.com/image/${aid[0]}/$aid/$aid.jpg';
+      url = 'https://img.wenku8.com/image/${aid[0]}/$aid/${aid}s.jpg';
     }
+    return ImageUrlHelper.normalize(url);
   }
 
   static List<NovelCover> parseToList(String htmlContent) {
@@ -485,9 +488,9 @@ class Parser {
 
       String imgUrl;
       if (aid.length <= 3) {
-        imgUrl = 'https://pic.wenku8.com/image/0/$aid/${aid}s.jpg';
+        imgUrl = 'https://img.wenku8.com/image/0/$aid/${aid}s.jpg';
       } else {
-        imgUrl = 'https://pic.wenku8.com/image/${aid[0]}/$aid/${aid}s.jpg';
+        imgUrl = 'https://img.wenku8.com/image/${aid[0]}/$aid/${aid}s.jpg';
       }
       imgUrl = ImageUrlHelper.normalize(imgUrl);
 
