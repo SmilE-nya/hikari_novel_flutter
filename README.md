@@ -1,10 +1,11 @@
 # Hikari Novel
 
-## 📣 重要通知
+## 重要通知
 
 自0.2.0版本开始，本软件开始转为使用网页源，放弃了mewx源
 
-⚠️ 如果你编译出来了，就自己用，不要发到其他地方。分享欲再旺盛也别发，你这是在害我们，老版的Hikari Novel就是一个例子。不要让我把这个项目也关停了，大家到时候都别用！
+> [!WARNING]
+> 如果你编译出来了，就自己用，不要发到其他地方。分享欲再旺盛也别发，你这是在害我们，老版的Hikari Novel就是一个例子。不要让我把这个项目也关停了，大家到时候都别用！
 
 ---
 
@@ -25,7 +26,7 @@
 
 </div>
 
-## ✨ 功能
+## 功能
 
 - Material Design 3风格
 - 支持深浅模式切换
@@ -38,7 +39,7 @@
 - 书架列表模式显示章节简介
 - 已缓存小说导出为 .txt / .epub（支持自定义导出目录）
 
-## 📱 支持平台
+## 支持平台
 
 | 平台       | 最小支持版本        | 备注                                |
 |------------|--------------------|-------------------------------------|
@@ -49,7 +50,7 @@
 | Linux      | 不支持              | -                                   |
 | Web        | 不支持              | -                                   |
 
-## ⛓️ 分支介绍
+## 分支介绍
 
 - `main` 主分支。发布版本用
 - `develop` 开发分支。想要提pr的人请拉取这个分支进行开发，然后提pr时也请merge到这个分支
@@ -58,7 +59,7 @@
 
 ![Stone Badge](https://stone.professorlee.work/api/stone/SmilE-nya/hikari_novel_flutter)
 
-## 💻 编译
+## 编译
 
 ### 我的开发环境
 
@@ -69,7 +70,7 @@
 [√] Visual Studio - develop Windows apps (Visual Studio 生成工具 2026 18.2.0)
 ```
 
-### 编译
+### 编译方法
 
 1. 克隆此仓库
 2. 安装flutter，参考 [flutter.dev](https://flutter.dev/docs/get-started/install)
@@ -77,20 +78,21 @@
 
 ### 警告
 
-⚠️我要说明一点，如果你编译出来了，就自己用，不要发到其他地方。分享欲再旺盛也别发，你这是在害我们，老版的Hikari Novel就是一个例子。不要让我把这个项目也关停了，大家到时候都别用！⚠️
+> [!WARNING]
+> 我要说明一点，如果你编译出来了，就自己用，不要发到其他地方。分享欲再旺盛也别发，你这是在害我们，老版的Hikari Novel就是一个例子。不要让我把这个项目也关停了，大家到时候都别用！
 
-## 🧑‍💻 交流
+## 交流
 
 &nbsp;<a href="https://t.me/+CUSABNkX5U83NGNl"><img alt="Static Badge" src="https://img.shields.io/badge/Telegram-加入群组-blue?style=for-the-badge&logo=telegram"></a>
 
-## 📣 声明
+## 声明
 
 - 本项目是个人为了兴趣以及学习移动端开发而开发的，仅用于学习和测试
 - 本项目所用API均从轻小说文库官方网站收集，不提供任何破解内容
 - 本项目是个人项目，与轻小说文库官方无关，请注意辨别
 - 本项目仅考虑开发者自己的使用
 
-## 📖 参考
+## 参考
 
 - [flutter_dmzj](https://github.com/xiaoyaocz/flutter_dmzj)
 - [venera](https://github.com/venera-app/venera)
