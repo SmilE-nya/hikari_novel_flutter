@@ -49,22 +49,6 @@
 | Linux      | 不支持              | -                                   |
 | Web        | 不支持              | -                                   |
 
-## 🖼️ 软件截图
-
-- 手机
-
-<div align="center">
-  <img alt="手机截图 1" src="./readme/1.jpg" width="30%"></img>
-  <img alt="手机截图 2" src="./readme/2.jpg" width="30%"></img>
-  <img alt="手机截图 3" src="./readme/3.jpg" width="30%">
-</div>
-
-- 平板
-
-<div align="center">
-  <img alt="平板截图 1" src="./readme/1_tablet.png" width="80%"></img> <img alt="平板截图 2" src="./readme/2_tablet.png" width="80%"></img>
-</div>
-
 ## ⛓️ 分支介绍
 
 - `main` 主分支。发布版本用
