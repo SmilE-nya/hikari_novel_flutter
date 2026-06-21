@@ -100,7 +100,3 @@
 - [PiliPalaX](https://github.com/orz12/PiliPalaX)
 - [PiliPlus](https://github.com/bggRGjQaUbCoE/PiliPlus)
 - AI
-
-## ⭐ 星标数趋势
-
-[![星标数趋势](https://starchart.cc/SmilE-nya/hikari_novel_flutter.svg?variant=adaptive)](https://starchart.cc/SmilE-nya/hikari_novel_flutter)
